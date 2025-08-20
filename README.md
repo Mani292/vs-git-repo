@@ -1,1 +1,0 @@
-# vs-git-repo
