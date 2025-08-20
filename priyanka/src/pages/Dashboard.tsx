@@ -13,7 +13,12 @@ export default function Dashboard() {
     { id: 4, type: 'placement', title: 'Completed Google Interview Prep', time: '3 days ago', icon: '💼' }
   ];
 
-  const quickActions = [
+  const quickActions: Array<{
+    title: string;
+    icon: string;
+    link: string;
+    color: 'indigo' | 'purple' | 'pink' | 'green' | 'blue' | 'yellow';
+  }> = [
     { title: 'Study Resources', icon: '📚', link: '/resources', color: 'indigo' },
     { title: 'Take Quiz', icon: '🎯', link: '#quiz', color: 'purple' },
     { title: 'Track Progress', icon: '📈', link: '#progress', color: 'pink' },
@@ -22,7 +27,7 @@ export default function Dashboard() {
     { title: 'Contact Support', icon: '💬', link: '/contact', color: 'yellow' }
   ];
 
-  const getColorClasses = (color) => {
+  const getColorClasses = (color: 'indigo' | 'purple' | 'pink' | 'green' | 'blue' | 'yellow') => {
     const colors = {
       indigo: 'bg-indigo-100 text-indigo-600 hover:bg-indigo-200',
       purple: 'bg-purple-100 text-purple-600 hover:bg-purple-200',

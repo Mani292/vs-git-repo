@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -8,7 +9,7 @@ export default function Contact() {
     message: ""
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle form submission here
     console.log("Form submitted:", formData);
@@ -16,7 +17,7 @@ export default function Contact() {
     setFormData({ name: "", email: "", subject: "", message: "" });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
