@@ -1,24 +1,24 @@
 import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import { useLanguage } from '../contexts/LanguageContext';
+
 import YouTubeVideo from '../components/YouTubeVideo';
 import { getVideosByCategory } from '../data/videoData';
 
 export default function Year2() {
   const [selectedSubject, setSelectedSubject] = useState('all');
   const { isDark } = useTheme();
-  const { language } = useLanguage();
+
 
   const subjects = [
-    { id: 'all', name: language === 'hindi' ? 'सभी विषय' : language === 'telugu' ? 'అన్ని విషయాలు' : 'All Subjects', icon: '📚' },
-    { id: 'oop', name: language === 'hindi' ? 'ऑब्जेक्ट ओरिएंटेड प्रोग्रामिंग' : language === 'telugu' ? 'ఆబ్జెక్ట్ ఓరియంటెడ్ ప్రోగ్రామింగ్' : 'OOP', icon: '💻' },
-    { id: 'database', name: language === 'hindi' ? 'डेटाबेस' : language === 'telugu' ? 'డేటాబేస్' : 'Database', icon: '🗄️' },
-    { id: 'networks', name: language === 'hindi' ? 'कंप्यूटर नेटवर्क' : language === 'telugu' ? 'కంప్యూటర్ నెట్‌వర్క్' : 'Networks', icon: '🌐' },
-    { id: 'data structures', name: language === 'hindi' ? 'डेटा स्ट्रक्चर' : language === 'telugu' ? 'డేటా స్ట్రక్చర్' : 'Data Structures', icon: '📊' },
-    { id: 'algorithms', name: language === 'hindi' ? 'एल्गोरिथम' : language === 'telugu' ? 'అల్గోరిథమ్' : 'Algorithms', icon: '⚡' }
+    { id: 'all', name: 'All Subjects', icon: '📚' },
+    { id: 'oop', name: 'OOP', icon: '💻' },
+    { id: 'database', name: 'Database', icon: '🗄️' },
+    { id: 'networks', name: 'Networks', icon: '🌐' },
+    { id: 'data structures', name: 'Data Structures', icon: '📊' },
+    { id: 'algorithms', name: 'Algorithms', icon: '⚡' }
   ];
 
-  const videos = getVideosByCategory('year2', language);
+  const videos = getVideosByCategory('year2');
 
   const filteredVideos = selectedSubject === 'all' 
     ? videos 
@@ -31,10 +31,10 @@ export default function Year2() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              {language === 'hindi' ? 'दूसरा वर्ष' : language === 'telugu' ? 'రెండవ సంవత్సరం' : 'Second Year'}
+              Second Year
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-              {language === 'hindi' ? 'उन्नत प्रोग्रामिंग और सॉफ्टवेयर इंजीनियरिंग अवधारणाएं' : language === 'telugu' ? 'అధునాతన ప్రోగ్రామింగ్ మరియు సాఫ్ట్‌వేర్ ఇంజినీరింగ్ భావనలు' : 'Advanced programming and software engineering concepts'}
+              Advanced programming and software engineering concepts
             </p>
           </div>
         </div>
@@ -69,10 +69,10 @@ export default function Year2() {
             <div className="text-center py-12">
               <div className="text-6xl mb-4">📚</div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'hindi' ? 'कोई वीडियो नहीं मिला' : language === 'telugu' ? 'వీడియోలు కనుగొనబడలేదు' : 'No videos found'}
+                No videos found
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                {language === 'hindi' ? 'अपने फ़िल्टर को बदलने का प्रयास करें' : language === 'telugu' ? 'మీ ఫిల్టర్‌ని మార్చడానికి ప్రయత్నించండి' : 'Try changing your filter'}
+                Try changing your filter
               </p>
             </div>
           ) : (
@@ -86,7 +86,7 @@ export default function Year2() {
                     videoId={video.id}
                     title={video.title}
                     description={video.description}
-                    language={language}
+
                   />
                   <div className="p-4">
                     <div className="flex items-center justify-between mb-2">
@@ -120,10 +120,10 @@ export default function Year2() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              {language === 'hindi' ? 'अतिरिक्त संसाधन' : language === 'telugu' ? 'అదనపు వనరులు' : 'Additional Resources'}
+              Additional Resources
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400">
-              {language === 'hindi' ? 'अपनी पढ़ाई को बेहतर बनाने के लिए अतिरिक्त सामग्री' : language === 'telugu' ? 'మీ అధ్యయనాన్ని మెరుగుపరచడానికి అదనపు పదార్థాలు' : 'Additional materials to enhance your studies'}
+              Additional materials to enhance your studies
             </p>
           </div>
 
@@ -131,30 +131,30 @@ export default function Year2() {
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
               <div className="text-3xl mb-4">💻</div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'hindi' ? 'प्रोग्रामिंग प्रोजेक्ट्स' : language === 'telugu' ? 'ప్రోగ్రామింగ్ ప్రాజెక్టులు' : 'Programming Projects'}
+                Programming Projects
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {language === 'hindi' ? 'व्यावहारिक प्रोग्रामिंग प्रोजेक्ट्स और कोडिंग चुनौतियां' : language === 'telugu' ? 'వ్యవహారిక ప్రోగ్రామింగ్ ప్రాజెక్టులు మరియు కోడింగ్ సవాళ్లు' : 'Practical programming projects and coding challenges'}
+                Practical programming projects and coding challenges
               </p>
             </div>
 
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
               <div className="text-3xl mb-4">📊</div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'hindi' ? 'डेटाबेस प्रोजेक्ट्स' : language === 'telugu' ? 'డేటాబేస్ ప్రాజెక్టులు' : 'Database Projects'}
+                Database Projects
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {language === 'hindi' ? 'डेटाबेस डिजाइन और SQL प्रोजेक्ट्स' : language === 'telugu' ? 'డేటాబేస్ డిజైన్ మరియు SQL ప్రాజెక్టులు' : 'Database design and SQL projects'}
+                Database design and SQL projects
               </p>
             </div>
 
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
               <div className="text-3xl mb-4">🌐</div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'hindi' ? 'नेटवर्किंग लैब्स' : language === 'telugu' ? 'నెట్‌వర్కింగ్ ల్యాబ్స్' : 'Networking Labs'}
+                Networking Labs
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {language === 'hindi' ? 'कंप्यूटर नेटवर्किंग प्रयोगशाला अभ्यास' : language === 'telugu' ? 'కంప్యూటర్ నెట్‌వర్కింగ్ ప్రయోగశాల అభ్యాసాలు' : 'Computer networking laboratory exercises'}
+                Computer networking laboratory exercises
               </p>
             </div>
           </div>

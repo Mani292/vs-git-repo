@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import { useLanguage } from '../contexts/LanguageContext';
+
 import YouTubeVideo from '../components/YouTubeVideo';
 import { getVideosByCategory } from '../data/videoData';
 
 export default function Year3() {
   const [selectedSubject, setSelectedSubject] = useState('all');
   const { isDark } = useTheme();
-  const { language } = useLanguage();
+
 
   const subjects = [
     { id: 'all', name: language === 'hindi' ? 'सभी विषय' : language === 'telugu' ? 'అన్ని విషయాలు' : 'All Subjects', icon: '📚' },
@@ -18,7 +18,7 @@ export default function Year3() {
     { id: 'mobile development', name: language === 'hindi' ? 'मोबाइल डेवलपमेंट' : language === 'telugu' ? 'మొబైల్ డెవలప్మెంట్' : 'Mobile Development', icon: '📱' }
   ];
 
-  const videos = getVideosByCategory('year3', language);
+  const videos = getVideosByCategory('year3');
 
   const filteredVideos = selectedSubject === 'all' 
     ? videos 
@@ -31,10 +31,10 @@ export default function Year3() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              {language === 'hindi' ? 'तीसरा वर्ष' : language === 'telugu' ? 'మూడవ సంవత్సరం' : 'Third Year'}
+              Third Year
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-              {language === 'hindi' ? 'विशेषज्ञता और उन्नत तकनीकी कौशल' : language === 'telugu' ? 'ప్రత్యేకత మరియు అధునాతన సాంకేతిక నైపుణ్యాలు' : 'Specialization and advanced technical skills'}
+              Specialization and advanced technical skills
             </p>
           </div>
         </div>
@@ -86,7 +86,7 @@ export default function Year3() {
                     videoId={video.id}
                     title={video.title}
                     description={video.description}
-                    language={language}
+
                   />
                   <div className="p-4">
                     <div className="flex items-center justify-between mb-2">

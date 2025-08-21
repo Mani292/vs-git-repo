@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTheme } from '../contexts/ThemeContext';
-import { useLanguage } from '../contexts/LanguageContext';
+
+
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -16,40 +16,40 @@ export default function SignUp() {
     rollNumber: '',
     phoneNumber: ''
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { isDark } = useTheme();
-  const { language } = useLanguage();
+
+
 
   const years = [
-    { value: '1', label: language === 'hindi' ? 'पहला वर्ष' : language === 'telugu' ? 'మొదటి సంవత్సరం' : '1st Year' },
-    { value: '2', label: language === 'hindi' ? 'दूसरा वर्ष' : language === 'telugu' ? 'రెండవ సంవత్సరం' : '2nd Year' },
-    { value: '3', label: language === 'hindi' ? 'तीसरा वर्ष' : language === 'telugu' ? 'మూడవ సంవత్సరం' : '3rd Year' },
-    { value: '4', label: language === 'hindi' ? 'चौथा वर्ष' : language === 'telugu' ? 'నాలుగవ సంవత్సరం' : '4th Year' }
+    { value: '1', label: '1st Year' },
+    { value: '2', label: '2nd Year' },
+    { value: '3', label: '3rd Year' },
+    { value: '4', label: '4th Year' }
   ];
 
   const semesters = [
-    { value: '1', label: language === 'hindi' ? 'पहला सेमेस्टर' : language === 'telugu' ? 'మొదటి సెమిస్టర్' : '1st Semester' },
-    { value: '2', label: language === 'hindi' ? 'दूसरा सेमेस्टर' : language === 'telugu' ? 'రెండవ సెమిస్టర్' : '2nd Semester' },
-    { value: '3', label: language === 'hindi' ? 'तीसरा सेमेस्टर' : language === 'telugu' ? 'మూడవ సెమిస్టర్' : '3rd Semester' },
-    { value: '4', label: language === 'hindi' ? 'चौथा सेमेस्टर' : language === 'telugu' ? 'నాలుగవ సెమిస్టర్' : '4th Semester' },
-    { value: '5', label: language === 'hindi' ? 'पांचवां सेमेस्टर' : language === 'telugu' ? 'ఐదవ సెమిస్టర్' : '5th Semester' },
-    { value: '6', label: language === 'hindi' ? 'छठा सेमेस्टर' : language === 'telugu' ? 'ఆరవ సెమిస్టర్' : '6th Semester' },
-    { value: '7', label: language === 'hindi' ? 'सातवां सेमेस्टर' : language === 'telugu' ? 'ఏడవ సెమిస్టర్' : '7th Semester' },
-    { value: '8', label: language === 'hindi' ? 'आठवां सेमेस्टर' : language === 'telugu' ? 'ఎనిమిదవ సెమిస్టర్' : '8th Semester' }
+    { value: '1', label: '1st Semester' },
+    { value: '2', label: '2nd Semester' },
+    { value: '3', label: '3rd Semester' },
+    { value: '4', label: '4th Semester' },
+    { value: '5', label: '5th Semester' },
+    { value: '6', label: '6th Semester' },
+    { value: '7', label: '7th Semester' },
+    { value: '8', label: '8th Semester' }
   ];
 
   const branches = [
-    { value: 'cse', label: language === 'hindi' ? 'कंप्यूटर साइंस इंजीनियरिंग' : language === 'telugu' ? 'కంప్యూటర్ సైన్స్ ఇంజినీరింగ్' : 'Computer Science Engineering' },
-    { value: 'ece', label: language === 'hindi' ? 'इलेक्ट्रॉनिक्स इंजीनियरिंग' : language === 'telugu' ? 'ఎలక్ట్రానిక్స్ ఇంజినీరింగ్' : 'Electronics Engineering' },
-    { value: 'me', label: language === 'hindi' ? 'मैकेनिकल इंजीनियरिंग' : language === 'telugu' ? 'మెకానికల్ ఇంజినీరింగ్' : 'Mechanical Engineering' },
-    { value: 'ce', label: language === 'hindi' ? 'सिविल इंजीनियरिंग' : language === 'telugu' ? 'సివిల్ ఇంజినీరింగ్' : 'Civil Engineering' },
-    { value: 'it', label: language === 'hindi' ? 'इनफॉर्मेशन टेक्नोलॉजी' : language === 'telugu' ? 'ఇన్ఫర్మేషన్ టెక్నాలజీ' : 'Information Technology' },
-    { value: 'eee', label: language === 'hindi' ? 'इलेक्ट्रिकल इंजीनियरिंग' : language === 'telugu' ? 'ఎలక్ట్రికల్ ఇంజినీరింగ్' : 'Electrical Engineering' }
+    { value: 'cse', label: 'Computer Science Engineering' },
+    { value: 'ece', label: 'Electronics Engineering' },
+    { value: 'me', label: 'Mechanical Engineering' },
+    { value: 'ce', label: 'Civil Engineering' },
+    { value: 'it', label: 'Information Technology' },
+    { value: 'eee', label: 'Electrical Engineering' }
   ];
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -65,61 +65,61 @@ export default function SignUp() {
   };
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: Record<string, string> = {};
 
     if (!formData.username.trim()) {
-      newErrors.username = language === 'hindi' ? 'उपयोगकर्ता नाम आवश्यक है' : language === 'telugu' ? 'వినియోగదారు పేరు అవసరం' : 'Username is required';
+      newErrors.username = 'Username is required';
     } else if (formData.username.length < 3) {
-      newErrors.username = language === 'hindi' ? 'उपयोगकर्ता नाम कम से कम 3 अक्षर होना चाहिए' : language === 'telugu' ? 'వినియోగదారు పేరు కనీసం 3 అక్షరాలు ఉండాలి' : 'Username must be at least 3 characters';
+      newErrors.username = 'Username must be at least 3 characters';
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = language === 'hindi' ? 'ईमेल आवश्यक है' : language === 'telugu' ? 'ఇమెయిల్ అవసరం' : 'Email is required';
+      newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = language === 'hindi' ? 'वैध ईमेल दर्ज करें' : language === 'telugu' ? 'చెల్లుబాటు అయ్యే ఇమెయిల్ నమోదు చేయండి' : 'Please enter a valid email';
+      newErrors.email = 'Please enter a valid email';
     }
 
     if (!formData.password) {
-      newErrors.password = language === 'hindi' ? 'पासवर्ड आवश्यक है' : language === 'telugu' ? 'పాస్‌వర్డ్ అవసరం' : 'Password is required';
+      newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
-      newErrors.password = language === 'hindi' ? 'पासवर्ड कम से कम 6 अक्षर होना चाहिए' : language === 'telugu' ? 'పాస్‌వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి' : 'Password must be at least 6 characters';
+      newErrors.password = 'Password must be at least 6 characters';
     }
 
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = language === 'hindi' ? 'पासवर्ड मेल नहीं खाते' : language === 'telugu' ? 'పాస్‌వర్డ్‌లు సరిపోలడం లేదు' : 'Passwords do not match';
+      newErrors.confirmPassword = 'Passwords do not match';
     }
 
     if (!formData.fullName.trim()) {
-      newErrors.fullName = language === 'hindi' ? 'पूरा नाम आवश्यक है' : language === 'telugu' ? 'పూర్తి పేరు అవసరం' : 'Full name is required';
+      newErrors.fullName = 'Full name is required';
     }
 
     if (!formData.year) {
-      newErrors.year = language === 'hindi' ? 'वर्ष चुनें' : language === 'telugu' ? 'సంవత్సరాన్ని ఎంచుకోండి' : 'Please select year';
+      newErrors.year = 'Please select year';
     }
 
     if (!formData.semester) {
-      newErrors.semester = language === 'hindi' ? 'सेमेस्टर चुनें' : language === 'telugu' ? 'సెమిస్టర్‌ని ఎంచుకోండి' : 'Please select semester';
+      newErrors.semester = 'Please select semester';
     }
 
     if (!formData.branch) {
-      newErrors.branch = language === 'hindi' ? 'शाखा चुनें' : language === 'telugu' ? 'శాఖను ఎంచుకోండి' : 'Please select branch';
+      newErrors.branch = 'Please select branch';
     }
 
     if (!formData.rollNumber.trim()) {
-      newErrors.rollNumber = language === 'hindi' ? 'रोल नंबर आवश्यक है' : language === 'telugu' ? 'రోల్ నంబర్ అవసరం' : 'Roll number is required';
+      newErrors.rollNumber = 'Roll number is required';
     }
 
     if (!formData.phoneNumber.trim()) {
-      newErrors.phoneNumber = language === 'hindi' ? 'फोन नंबर आवश्यक है' : language === 'telugu' ? 'ఫోన్ నంబర్ అవసరం' : 'Phone number is required';
+      newErrors.phoneNumber = 'Phone number is required';
     } else if (!/^\d{10}$/.test(formData.phoneNumber)) {
-      newErrors.phoneNumber = language === 'hindi' ? '10 अंकों का फोन नंबर दर्ज करें' : language === 'telugu' ? '10 అంకెల ఫోన్ నంబర్ నమోదు చేయండి' : 'Please enter a 10-digit phone number';
+      newErrors.phoneNumber = 'Please enter a 10-digit phone number';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if (!validateForm()) {
@@ -143,12 +143,12 @@ export default function SignUp() {
             <span className="text-white font-bold text-xl">T</span>
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-            {language === 'hindi' ? 'खाता बनाएं' : language === 'telugu' ? 'ఖాతా సృష్టించండి' : 'Create Account'}
+            Create Account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-            {language === 'hindi' ? 'पहले से खाता है?' : language === 'telugu' ? 'ఇప్పటికే ఖాతా ఉందా?' : 'Already have an account?'}{' '}
+            Already have an account?{' '}
             <Link to="/login" className="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500">
-              {language === 'hindi' ? 'लॉगिन करें' : language === 'telugu' ? 'లాగిన్ చేయండి' : 'Sign in'}
+              Sign in
             </Link>
           </p>
         </div>
@@ -159,7 +159,7 @@ export default function SignUp() {
             {/* Full Name */}
             <div>
               <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {language === 'hindi' ? 'पूरा नाम' : language === 'telugu' ? 'పూర్తి పేరు' : 'Full Name'}
+                Full Name
               </label>
               <input
                 id="fullName"
@@ -171,7 +171,7 @@ export default function SignUp() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.fullName ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 } placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm bg-white dark:bg-gray-700`}
-                placeholder={language === 'hindi' ? 'अपना पूरा नाम दर्ज करें' : language === 'telugu' ? 'మీ పూర్తి పేరు నమోదు చేయండి' : 'Enter your full name'}
+                placeholder="Enter your full name"
               />
               {errors.fullName && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.fullName}</p>}
             </div>
@@ -179,7 +179,7 @@ export default function SignUp() {
             {/* Username */}
             <div>
               <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {language === 'hindi' ? 'उपयोगकर्ता नाम' : language === 'telugu' ? 'వినియోగదారు పేరు' : 'Username'}
+                Username
               </label>
               <input
                 id="username"
@@ -191,7 +191,7 @@ export default function SignUp() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.username ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 } placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm bg-white dark:bg-gray-700`}
-                placeholder={language === 'hindi' ? 'उपयोगकर्ता नाम दर्ज करें' : language === 'telugu' ? 'వినియోగదారు పేరు నమోదు చేయండి' : 'Enter username'}
+                placeholder="Enter username"
               />
               {errors.username && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.username}</p>}
             </div>
@@ -199,7 +199,7 @@ export default function SignUp() {
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {language === 'hindi' ? 'ईमेल पता' : language === 'telugu' ? 'ఇమెయిల్ చిరునామా' : 'Email Address'}
+                Email Address
               </label>
               <input
                 id="email"
@@ -212,7 +212,7 @@ export default function SignUp() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 } placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm bg-white dark:bg-gray-700`}
-                placeholder={language === 'hindi' ? 'ईमेल दर्ज करें' : language === 'telugu' ? 'ఇమెయిల్ నమోదు చేయండి' : 'Enter email'}
+                placeholder="Enter email"
               />
               {errors.email && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>}
             </div>
@@ -222,7 +222,7 @@ export default function SignUp() {
               {/* Year */}
               <div>
                 <label htmlFor="year" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {language === 'hindi' ? 'वर्ष' : language === 'telugu' ? 'సంవత్సరం' : 'Year'}
+                  Year
                 </label>
                 <select
                   id="year"
@@ -233,7 +233,7 @@ export default function SignUp() {
                     errors.year ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   } text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white dark:bg-gray-700`}
                 >
-                  <option value="">{language === 'hindi' ? 'वर्ष चुनें' : language === 'telugu' ? 'సంవత్సరాన్ని ఎంచుకోండి' : 'Select Year'}</option>
+                  <option value="">Select Year</option>
                   {years.map(year => (
                     <option key={year.value} value={year.value}>{year.label}</option>
                   ))}
@@ -244,7 +244,7 @@ export default function SignUp() {
               {/* Semester */}
               <div>
                 <label htmlFor="semester" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {language === 'hindi' ? 'सेमेस्टर' : language === 'telugu' ? 'సెమిస్టర్' : 'Semester'}
+                  Semester
                 </label>
                 <select
                   id="semester"
@@ -255,7 +255,7 @@ export default function SignUp() {
                     errors.semester ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   } text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white dark:bg-gray-700`}
                 >
-                  <option value="">{language === 'hindi' ? 'सेमेस्टर चुनें' : language === 'telugu' ? 'సెమిస్టర్‌ని ఎంచుకోండి' : 'Select Semester'}</option>
+                  <option value="">Select Semester</option>
                   {semesters.map(semester => (
                     <option key={semester.value} value={semester.value}>{semester.label}</option>
                   ))}
@@ -267,7 +267,7 @@ export default function SignUp() {
             {/* Branch */}
             <div>
               <label htmlFor="branch" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {language === 'hindi' ? 'शाखा' : language === 'telugu' ? 'శాఖ' : 'Branch'}
+                Branch
               </label>
               <select
                 id="branch"
@@ -278,7 +278,7 @@ export default function SignUp() {
                   errors.branch ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 } text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white dark:bg-gray-700`}
               >
-                <option value="">{language === 'hindi' ? 'शाखा चुनें' : language === 'telugu' ? 'శాఖను ఎంచుకోండి' : 'Select Branch'}</option>
+                <option value="">Select Branch</option>
                 {branches.map(branch => (
                   <option key={branch.value} value={branch.value}>{branch.label}</option>
                 ))}
@@ -289,7 +289,7 @@ export default function SignUp() {
             {/* Roll Number */}
             <div>
               <label htmlFor="rollNumber" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {language === 'hindi' ? 'रोल नंबर' : language === 'telugu' ? 'రోల్ నంబర్' : 'Roll Number'}
+                Roll Number
               </label>
               <input
                 id="rollNumber"
@@ -301,7 +301,7 @@ export default function SignUp() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.rollNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 } placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm bg-white dark:bg-gray-700`}
-                placeholder={language === 'hindi' ? 'रोल नंबर दर्ज करें' : language === 'telugu' ? 'రోల్ నంబర్ నమోదు చేయండి' : 'Enter roll number'}
+                placeholder="Enter roll number"
               />
               {errors.rollNumber && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.rollNumber}</p>}
             </div>
@@ -309,7 +309,7 @@ export default function SignUp() {
             {/* Phone Number */}
             <div>
               <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {language === 'hindi' ? 'फोन नंबर' : language === 'telugu' ? 'ఫోన్ నంబర్' : 'Phone Number'}
+                Phone Number
               </label>
               <input
                 id="phoneNumber"
@@ -321,7 +321,7 @@ export default function SignUp() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.phoneNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 } placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm bg-white dark:bg-gray-700`}
-                placeholder={language === 'hindi' ? 'फोन नंबर दर्ज करें' : language === 'telugu' ? 'ఫోన్ నంబర్ నమోదు చేయండి' : 'Enter phone number'}
+                placeholder="Enter phone number"
               />
               {errors.phoneNumber && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.phoneNumber}</p>}
             </div>
@@ -329,7 +329,7 @@ export default function SignUp() {
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {language === 'hindi' ? 'पासवर्ड' : language === 'telugu' ? 'పాస్‌వర్డ్' : 'Password'}
+                Password
               </label>
               <input
                 id="password"
@@ -342,7 +342,7 @@ export default function SignUp() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.password ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 } placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm bg-white dark:bg-gray-700`}
-                placeholder={language === 'hindi' ? 'पासवर्ड दर्ज करें' : language === 'telugu' ? 'పాస్‌వర్డ్ నమోదు చేయండి' : 'Enter password'}
+                placeholder="Enter password"
               />
               {errors.password && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.password}</p>}
             </div>
@@ -350,7 +350,7 @@ export default function SignUp() {
             {/* Confirm Password */}
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {language === 'hindi' ? 'पासवर्ड की पुष्टि करें' : language === 'telugu' ? 'పాస్‌వర్డ్ నిర్ధారించండి' : 'Confirm Password'}
+                Confirm Password
               </label>
               <input
                 id="confirmPassword"
@@ -363,7 +363,7 @@ export default function SignUp() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.confirmPassword ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 } placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm bg-white dark:bg-gray-700`}
-                placeholder={language === 'hindi' ? 'पासवर्ड की पुष्टि करें' : language === 'telugu' ? 'పాస్‌వర్డ్ నిర్ధారించండి' : 'Confirm password'}
+                placeholder="Confirm password"
               />
               {errors.confirmPassword && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.confirmPassword}</p>}
             </div>
@@ -381,10 +381,10 @@ export default function SignUp() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  {language === 'hindi' ? 'खाता बना रहा है...' : language === 'telugu' ? 'ఖాతా సృష్టిస్తోంది...' : 'Creating account...'}
+                  Creating account...
                 </div>
               ) : (
-                language === 'hindi' ? 'खाता बनाएं' : language === 'telugu' ? 'ఖాతా సృష్టించండి' : 'Create Account'
+                'Create Account'
               )}
             </button>
           </div>

@@ -1,24 +1,24 @@
 import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import { useLanguage } from '../contexts/LanguageContext';
+
 import YouTubeVideo from '../components/YouTubeVideo';
 import { getVideosByCategory } from '../data/videoData';
 
 export default function Year1() {
   const [selectedSubject, setSelectedSubject] = useState('all');
   const { isDark } = useTheme();
-  const { language } = useLanguage();
+
 
   const subjects = [
-    { id: 'all', name: language === 'hindi' ? 'सभी विषय' : language === 'telugu' ? 'అన్ని విషయాలు' : 'All Subjects', icon: '📚' },
-    { id: 'programming', name: language === 'hindi' ? 'प्रोग्रामिंग' : language === 'telugu' ? 'ప్రోగ్రామింగ్' : 'Programming', icon: '💻' },
-    { id: 'mathematics', name: language === 'hindi' ? 'गणित' : language === 'telugu' ? 'గణితం' : 'Mathematics', icon: '🔢' },
-    { id: 'physics', name: language === 'hindi' ? 'भौतिकी' : language === 'telugu' ? 'భౌతిక శాస్త్రం' : 'Physics', icon: '⚛️' },
-    { id: 'chemistry', name: language === 'hindi' ? 'रसायन विज्ञान' : language === 'telugu' ? 'రసాయన శాస్త్రం' : 'Chemistry', icon: '🧪' },
-    { id: 'english', name: language === 'hindi' ? 'अंग्रेजी' : language === 'telugu' ? 'ఆంగ్లం' : 'English', icon: '📖' }
+    { id: 'all', name: 'All Subjects', icon: '📚' },
+    { id: 'programming', name: 'Programming', icon: '💻' },
+    { id: 'mathematics', name: 'Mathematics', icon: '🔢' },
+    { id: 'physics', name: 'Physics', icon: '⚛️' },
+    { id: 'chemistry', name: 'Chemistry', icon: '🧪' },
+    { id: 'drawing', name: 'Engineering Drawing', icon: '📐' }
   ];
 
-  const videos = getVideosByCategory('year1', language);
+  const videos = getVideosByCategory('year1');
 
   const filteredVideos = selectedSubject === 'all' 
     ? videos 
@@ -31,10 +31,10 @@ export default function Year1() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              {language === 'hindi' ? 'पहला वर्ष' : language === 'telugu' ? 'మొదటి సంవత్సరం' : 'First Year'}
+              First Year
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-              {language === 'hindi' ? 'इंजीनियरिंग की मूल बातें और प्रोग्रामिंग की शुरुआत' : language === 'telugu' ? 'ఇంజినీరింగ్ యొక్క ప్రాథమిక అంశాలు మరియు ప్రోగ్రామింగ్ ప్రారంభం' : 'Engineering fundamentals and programming basics'}
+              Engineering fundamentals and programming basics
             </p>
           </div>
         </div>
@@ -69,10 +69,10 @@ export default function Year1() {
             <div className="text-center py-12">
               <div className="text-6xl mb-4">📚</div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'hindi' ? 'कोई वीडियो नहीं मिला' : language === 'telugu' ? 'వీడియోలు కనుగొనబడలేదు' : 'No videos found'}
+                No videos found
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                {language === 'hindi' ? 'अपने फ़िल्टर को बदलने का प्रयास करें' : language === 'telugu' ? 'మీ ఫిల్టర్‌ని మార్చడానికి ప్రయత్నించండి' : 'Try changing your filter'}
+                Try changing your filter
               </p>
             </div>
           ) : (
@@ -86,7 +86,7 @@ export default function Year1() {
                     videoId={video.id}
                     title={video.title}
                     description={video.description}
-                    language={language}
+
                   />
                   <div className="p-4">
                     <div className="flex items-center justify-between mb-2">
@@ -120,10 +120,10 @@ export default function Year1() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              {language === 'hindi' ? 'अतिरिक्त संसाधन' : language === 'telugu' ? 'అదనపు వనరులు' : 'Additional Resources'}
+              Additional Resources
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400">
-              {language === 'hindi' ? 'अपनी पढ़ाई को बेहतर बनाने के लिए अतिरिक्त सामग्री' : language === 'telugu' ? 'మీ అధ్యయనాన్ని మెరుగుపరచడానికి అదనపు పదార్థాలు' : 'Additional materials to enhance your studies'}
+              Additional materials to enhance your studies
             </p>
           </div>
 
@@ -131,30 +131,30 @@ export default function Year1() {
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
               <div className="text-3xl mb-4">📖</div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'hindi' ? 'पाठ्यपुस्तकें' : language === 'telugu' ? 'పాఠ్యపుస్తకాలు' : 'Textbooks'}
+                Textbooks
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {language === 'hindi' ? 'आधिकारिक पाठ्यपुस्तकें और संदर्भ सामग्री' : language === 'telugu' ? 'అధికారిక పాఠ్యపుస్తకాలు మరియు సూచన పదార్థాలు' : 'Official textbooks and reference materials'}
+                Official textbooks and reference materials
               </p>
             </div>
 
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
               <div className="text-3xl mb-4">📝</div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'hindi' ? 'अभ्यास प्रश्न' : language === 'telugu' ? 'అభ్యాస ప్రశ్నలు' : 'Practice Questions'}
+                Practice Questions
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {language === 'hindi' ? 'अवधारणाओं को मजबूत करने के लिए अभ्यास प्रश्न' : language === 'telugu' ? 'భావనలను బలపరచడానికి అభ్యాస ప్రశ్నలు' : 'Practice questions to strengthen concepts'}
+                Practice questions to strengthen concepts
               </p>
             </div>
 
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
               <div className="text-3xl mb-4">🎯</div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'hindi' ? 'पिछले प्रश्न पत्र' : language === 'telugu' ? 'గత ప్రశ్న పత్రాలు' : 'Previous Papers'}
+                Previous Papers
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {language === 'hindi' ? 'पिछले वर्षों के प्रश्न पत्र और समाधान' : language === 'telugu' ? 'గత సంవత్సరాల ప్రశ్న పత్రాలు మరియు పరిష్కారాలు' : 'Previous years question papers and solutions'}
+                Previous years question papers and solutions
               </p>
             </div>
           </div>

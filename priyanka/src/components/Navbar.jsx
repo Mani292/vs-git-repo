@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import ThemeToggle from "./ThemeToggle";
 import NotificationButton from "./NotificationButton";
-import LanguageSelector from "./LanguageSelector";
+
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -129,9 +129,8 @@ export default function Navbar() {
               About
             </Link>
 
-            {/* Theme Toggle, Language Selector, Notifications and Auth */}
+            {/* Theme Toggle, Notifications and Auth */}
             <div className="flex items-center space-x-4">
-              <LanguageSelector />
               <NotificationButton />
               <ThemeToggle />
               <Link 
@@ -151,7 +150,6 @@ export default function Navbar() {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-4">
-            <LanguageSelector />
             <NotificationButton />
             <ThemeToggle />
             <button
