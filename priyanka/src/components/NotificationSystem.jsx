@@ -7,44 +7,37 @@ export default function NotificationSystem() {
   const { isDark } = useTheme();
 
   useEffect(() => {
-    // Simulate incoming notifications
-    const notificationInterval = setInterval(() => {
-      const newNotification = {
-        id: Date.now(),
-        type: Math.random() > 0.5 ? 'achievement' : 'update',
-        title: getRandomNotificationTitle(),
-        message: getRandomNotificationMessage(),
-        timestamp: new Date(),
-        read: false
-      };
-      
-      setNotifications(prev => [newNotification, ...prev.slice(0, 4)]);
-    }, 10000); // Add notification every 10 seconds
+    const url = import.meta.env.VITE_NOTIFICATIONS_API_URL;
+    if (!url) return;
+    let aborted = false;
 
-    return () => clearInterval(notificationInterval);
+    const load = async () => {
+      try {
+        const headers = {};
+        const key = import.meta.env.VITE_NOTIFICATIONS_API_KEY;
+        if (key) headers['Authorization'] = `Bearer ${key}`;
+        const res = await fetch(url, { headers });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (aborted) return;
+        const mapped = Array.isArray(data) ? data.map((n) => ({
+          id: n.id ?? Date.now(),
+          type: n.type ?? 'update',
+          title: n.title ?? 'Notification',
+          message: n.message ?? '',
+          timestamp: n.timestamp ? new Date(n.timestamp) : new Date(),
+          read: Boolean(n.read) === true ? true : false
+        })) : [];
+        setNotifications(mapped);
+      } catch (e) {
+        // fail silent: no fake notifications
+      }
+    };
+
+    load();
+    const interval = setInterval(load, 60000);
+    return () => { aborted = true; clearInterval(interval); };
   }, []);
-
-  const getRandomNotificationTitle = () => {
-    const titles = [
-      '🎉 Achievement Unlocked!',
-      '📚 New Resource Added',
-      '🎯 Quiz Available',
-      '💼 Placement Update',
-      '📈 Progress Milestone'
-    ];
-    return titles[Math.floor(Math.random() * titles.length)];
-  };
-
-  const getRandomNotificationMessage = () => {
-    const messages = [
-      'You completed 5 quizzes in a row!',
-      'New DSA practice problems available',
-      'Take the weekly coding challenge',
-      'Google interview prep guide updated',
-      'You reached 75% completion in Web Development'
-    ];
-    return messages[Math.floor(Math.random() * messages.length)];
-  };
 
   const markAsRead = (id) => {
     setNotifications(prev => 
@@ -88,7 +81,7 @@ export default function NotificationSystem() {
               {notifications.length > 0 && (
                 <button
                   onClick={clearAll}
-                  className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                  className="text-sm text-gray-500 dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-100"
                 >
                   Clear all
                 </button>
@@ -126,10 +119,10 @@ export default function NotificationSystem() {
                           <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                         )}
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      <p className="text-sm text-gray-600 dark:text-gray-200 mt-1">
                         {notification.message}
                       </p>
-                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+                      <p className="text-xs text-gray-400 dark:text-gray-300 mt-2">
                         {notification.timestamp.toLocaleTimeString([], { 
                           hour: '2-digit', 
                           minute: '2-digit' 
@@ -144,7 +137,7 @@ export default function NotificationSystem() {
 
           {notifications.length > 0 && (
             <div className="p-3 border-t border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
-              <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
+              <div className="text-xs text-gray-500 dark:text-gray-300 text-center">
                 {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}
               </div>
             </div>
@@ -170,13 +163,13 @@ export default function NotificationSystem() {
               <h4 className="font-medium text-gray-900 dark:text-white text-sm">
                 {notification.title}
               </h4>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+              <p className="text-sm text-gray-600 dark:text-gray-200 mt-1">
                 {notification.message}
               </p>
             </div>
             <button
               onClick={() => markAsRead(notification.id)}
-              className="flex-shrink-0 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
+              className="flex-shrink-0 text-gray-400 dark:text-gray-300 hover:text-gray-600 dark:hover:text-gray-100"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

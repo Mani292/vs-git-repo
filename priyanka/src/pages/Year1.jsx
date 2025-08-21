@@ -4,21 +4,21 @@ import { useLanguage } from '../contexts/LanguageContext';
 import YouTubeVideo from '../components/YouTubeVideo';
 import { getVideosByCategory } from '../data/videoData';
 
-export default function Year4() {
+export default function Year1() {
   const [selectedSubject, setSelectedSubject] = useState('all');
   const { isDark } = useTheme();
   const { language } = useLanguage();
 
   const subjects = [
     { id: 'all', name: language === 'hindi' ? 'सभी विषय' : language === 'telugu' ? 'అన్ని విషయాలు' : 'All Subjects', icon: '📚' },
-    { id: 'deep learning', name: language === 'hindi' ? 'डीप लर्निंग' : language === 'telugu' ? 'డీప్ లెర్నింగ్' : 'Deep Learning', icon: '🧠' },
-    { id: 'cloud computing', name: language === 'hindi' ? 'क्लाउड कंप्यूटिंग' : language === 'telugu' ? 'క్లౌడ్ కంప్యూటింగ్' : 'Cloud Computing', icon: '☁️' },
-    { id: 'cybersecurity', name: language === 'hindi' ? 'साइबर सुरक्षा' : language === 'telugu' ? 'సైబర్ సెక్యూరిటీ' : 'Cybersecurity', icon: '🔒' },
-    { id: 'devops', name: language === 'hindi' ? 'DevOps' : language === 'telugu' ? 'DevOps' : 'DevOps', icon: '⚙️' },
-    { id: 'final year project', name: language === 'hindi' ? 'फाइनल ईयर प्रोजेक्ट' : language === 'telugu' ? 'ఫైనల్ ఇయర్ ప్రాజెక్ట్' : 'Final Year Project', icon: '🎓' }
+    { id: 'programming', name: language === 'hindi' ? 'प्रोग्रामिंग' : language === 'telugu' ? 'ప్రోగ్రామింగ్' : 'Programming', icon: '💻' },
+    { id: 'mathematics', name: language === 'hindi' ? 'गणित' : language === 'telugu' ? 'గణితం' : 'Mathematics', icon: '🔢' },
+    { id: 'physics', name: language === 'hindi' ? 'भौतिकी' : language === 'telugu' ? 'భౌతిక శాస్త్రం' : 'Physics', icon: '⚛️' },
+    { id: 'chemistry', name: language === 'hindi' ? 'रसायन विज्ञान' : language === 'telugu' ? 'రసాయన శాస్త్రం' : 'Chemistry', icon: '🧪' },
+    { id: 'english', name: language === 'hindi' ? 'अंग्रेजी' : language === 'telugu' ? 'ఆంగ్లం' : 'English', icon: '📖' }
   ];
 
-  const videos = getVideosByCategory('year4', language);
+  const videos = getVideosByCategory('year1', language);
 
   const filteredVideos = selectedSubject === 'all' 
     ? videos 
@@ -27,14 +27,14 @@ export default function Year4() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 dark:from-red-800 dark:via-orange-800 dark:to-yellow-800 text-white py-20">
+      <section className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-800 dark:via-purple-800 dark:to-pink-800 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              {language === 'hindi' ? 'चौथा वर्ष' : language === 'telugu' ? 'నాలుగవ సంవత్సరం' : 'Fourth Year'}
+              {language === 'hindi' ? 'पहला वर्ष' : language === 'telugu' ? 'మొదటి సంవత్సరం' : 'First Year'}
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-              {language === 'hindi' ? 'विशेषज्ञता और उद्योग तैयारी' : language === 'telugu' ? 'ప్రత్యేకత మరియు పరిశ్రమ సిద్ధత' : 'Specialization and industry readiness'}
+              {language === 'hindi' ? 'इंजीनियरिंग की मूल बातें और प्रोग्रामिंग की शुरुआत' : language === 'telugu' ? 'ఇంజినీరింగ్ యొక్క ప్రాథమిక అంశాలు మరియు ప్రోగ్రామింగ్ ప్రారంభం' : 'Engineering fundamentals and programming basics'}
             </p>
           </div>
         </div>
@@ -50,7 +50,7 @@ export default function Year4() {
                 onClick={() => setSelectedSubject(subject.id)}
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 ${
                   selectedSubject === subject.id
-                    ? 'bg-red-600 text-white shadow-lg'
+                    ? 'bg-blue-600 text-white shadow-lg'
                     : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600'
                 }`}
               >
@@ -129,32 +129,32 @@ export default function Year4() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-              <div className="text-3xl mb-4">🎓</div>
+              <div className="text-3xl mb-4">📖</div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'hindi' ? 'फाइनल प्रोजेक्ट' : language === 'telugu' ? 'ఫైనల్ ప్రాజెక్ట్' : 'Final Project'}
+                {language === 'hindi' ? 'पाठ्यपुस्तकें' : language === 'telugu' ? 'పాఠ్యపుస్తకాలు' : 'Textbooks'}
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {language === 'hindi' ? 'फाइनल ईयर प्रोजेक्ट गाइड और टेम्पलेट्स' : language === 'telugu' ? 'ఫైనల్ ఇయర్ ప్రాజెక్ట్ గైడ్ మరియు టెంప్లేట్లు' : 'Final year project guides and templates'}
+                {language === 'hindi' ? 'आधिकारिक पाठ्यपुस्तकें और संदर्भ सामग्री' : language === 'telugu' ? 'అధికారిక పాఠ్యపుస్తకాలు మరియు సూచన పదార్థాలు' : 'Official textbooks and reference materials'}
               </p>
             </div>
 
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-              <div className="text-3xl mb-4">💼</div>
+              <div className="text-3xl mb-4">📝</div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'hindi' ? 'प्लेसमेंट तैयारी' : language === 'telugu' ? 'ప్లేస్మెంట్ సిద్ధత' : 'Placement Preparation'}
+                {language === 'hindi' ? 'अभ्यास प्रश्न' : language === 'telugu' ? 'అభ్యాస ప్రశ్నలు' : 'Practice Questions'}
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {language === 'hindi' ? 'इंटरव्यू प्रैक्टिस और रिज्यूमे बिल्डिंग' : language === 'telugu' ? 'ఇంటర్వ్యూ ప్రాక్టీస్ మరియు రెజ్యూమే బిల్డింగ్' : 'Interview practice and resume building'}
+                {language === 'hindi' ? 'अवधारणाओं को मजबूत करने के लिए अभ्यास प्रश्न' : language === 'telugu' ? 'భావనలను బలపరచడానికి అభ్యాస ప్రశ్నలు' : 'Practice questions to strengthen concepts'}
               </p>
             </div>
 
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-              <div className="text-3xl mb-4">🌐</div>
+              <div className="text-3xl mb-4">🎯</div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'hindi' ? 'उद्योग प्रोजेक्ट्स' : language === 'telugu' ? 'పరిశ్రమ ప్రాజెక్టులు' : 'Industry Projects'}
+                {language === 'hindi' ? 'पिछले प्रश्न पत्र' : language === 'telugu' ? 'గత ప్రశ్న పత్రాలు' : 'Previous Papers'}
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {language === 'hindi' ? 'वास्तविक दुनिया के प्रोजेक्ट्स और इंटर्नशिप' : language === 'telugu' ? 'వాస్తవ ప్రపంచ ప్రాజెక్టులు మరియు ఇంటర్న్‌షిప్' : 'Real-world projects and internships'}
+                {language === 'hindi' ? 'पिछले वर्षों के प्रश्न पत्र और समाधान' : language === 'telugu' ? 'గత సంవత్సరాల ప్రశ్న పత్రాలు మరియు పరిష్కారాలు' : 'Previous years question papers and solutions'}
               </p>
             </div>
           </div>

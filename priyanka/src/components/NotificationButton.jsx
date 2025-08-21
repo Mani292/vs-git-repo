@@ -8,52 +8,37 @@ export default function NotificationButton() {
   const { isDark } = useTheme();
 
   useEffect(() => {
-    if (!isMuted) {
-      // Simulate incoming notifications
-      const notificationInterval = setInterval(() => {
-        const newNotification = {
-          id: Date.now(),
-          type: Math.random() > 0.5 ? 'achievement' : 'update',
-          title: getRandomNotificationTitle(),
-          message: getRandomNotificationMessage(),
-          timestamp: new Date(),
-          read: false
-        };
-        
-        setNotifications(prev => [newNotification, ...prev.slice(0, 4)]);
-      }, 15000); // Add notification every 15 seconds
+    const url = import.meta.env.VITE_NOTIFICATIONS_API_URL;
+    if (isMuted || !url) return;
+    let aborted = false;
 
-      return () => clearInterval(notificationInterval);
-    }
+    const load = async () => {
+      try {
+        const headers = {};
+        const key = import.meta.env.VITE_NOTIFICATIONS_API_KEY;
+        if (key) headers['Authorization'] = `Bearer ${key}`;
+        const res = await fetch(url, { headers });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (aborted) return;
+        const mapped = Array.isArray(data) ? data.map((n) => ({
+          id: n.id ?? Date.now(),
+          type: n.type ?? 'update',
+          title: n.title ?? 'Notification',
+          message: n.message ?? '',
+          timestamp: n.timestamp ? new Date(n.timestamp) : new Date(),
+          read: Boolean(n.read) === true ? true : false
+        })) : [];
+        setNotifications(mapped);
+      } catch (e) {
+        // ignore failures; do not simulate
+      }
+    };
+
+    load();
+    const interval = setInterval(load, 60000);
+    return () => { aborted = true; clearInterval(interval); };
   }, [isMuted]);
-
-  const getRandomNotificationTitle = () => {
-    const titles = [
-      '🎉 Achievement Unlocked!',
-      '📚 New Resource Added',
-      '🎯 Quiz Available',
-      '💼 Placement Update',
-      '📈 Progress Milestone',
-      '🚀 New Coding Challenge',
-      '🏆 Contest Winner!',
-      '📖 Study Reminder'
-    ];
-    return titles[Math.floor(Math.random() * titles.length)];
-  };
-
-  const getRandomNotificationMessage = () => {
-    const messages = [
-      'You completed 5 quizzes in a row!',
-      'New DSA practice problems available',
-      'Take the weekly coding challenge',
-      'Google interview prep guide updated',
-      'You reached 75% completion in Web Development',
-      'New LeetCode problems added',
-      'Congratulations! You won the coding contest',
-      'Time to review your progress this week'
-    ];
-    return messages[Math.floor(Math.random() * messages.length)];
-  };
 
   const markAsRead = (id) => {
     setNotifications(prev => 
@@ -126,7 +111,7 @@ export default function NotificationButton() {
                 {notifications.length > 0 && (
                   <button
                     onClick={clearAll}
-                    className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                    className="text-sm text-gray-500 dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-100 transition-colors"
                   >
                     Clear all
                   </button>
@@ -137,8 +122,8 @@ export default function NotificationButton() {
 
           <div className="max-h-64 overflow-y-auto bg-gray-50 dark:bg-gray-900">
             {isMuted ? (
-              <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-                <svg className="w-12 h-12 mx-auto mb-2 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-4 text-center text-gray-500 dark:text-gray-300">
+                <svg className="w-12 h-12 mx-auto mb-2 text-gray-300 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
                 </svg>
                 <p>Notifications muted</p>
@@ -150,8 +135,8 @@ export default function NotificationButton() {
                 </button>
               </div>
             ) : notifications.length === 0 ? (
-              <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-                <svg className="w-12 h-12 mx-auto mb-2 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-4 text-center text-gray-500 dark:text-gray-300">
+                <svg className="w-12 h-12 mx-auto mb-2 text-gray-300 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM10.5 3.75a6 6 0 0 1 6 6v3.75l1.5 1.5H3l1.5-1.5V9.75a6 6 0 0 1 6-6z" />
                 </svg>
                 <p>No notifications yet</p>
@@ -178,10 +163,10 @@ export default function NotificationButton() {
                           <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                         )}
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      <p className="text-sm text-gray-600 dark:text-gray-200 mt-1">
                         {notification.message}
                       </p>
-                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+                      <p className="text-xs text-gray-400 dark:text-gray-300 mt-2">
                         {notification.timestamp.toLocaleTimeString([], { 
                           hour: '2-digit', 
                           minute: '2-digit' 
@@ -196,7 +181,7 @@ export default function NotificationButton() {
 
           {!isMuted && notifications.length > 0 && (
             <div className="p-3 border-t border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
-              <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
+              <div className="text-xs text-gray-500 dark:text-gray-300 text-center">
                 {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}
               </div>
             </div>

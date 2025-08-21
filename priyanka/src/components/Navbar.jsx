@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import ThemeToggle from "./ThemeToggle";
 import NotificationButton from "./NotificationButton";
+import LanguageSelector from "./LanguageSelector";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -128,10 +129,9 @@ export default function Navbar() {
               About
             </Link>
 
-
-
-            {/* Theme Toggle and Notifications */}
+            {/* Theme Toggle, Language Selector, Notifications and Auth */}
             <div className="flex items-center space-x-4">
+              <LanguageSelector />
               <NotificationButton />
               <ThemeToggle />
               <Link 
@@ -140,11 +140,18 @@ export default function Navbar() {
               >
                 Login
               </Link>
+              <Link 
+                to="/signup" 
+                className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm font-medium rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+              >
+                Sign up
+              </Link>
             </div>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-4">
+            <LanguageSelector />
             <NotificationButton />
             <ThemeToggle />
             <button
@@ -186,6 +193,9 @@ export default function Navbar() {
 
           <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium bg-indigo-600 dark:bg-indigo-500 text-white hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors">
             Login
+          </Link>
+          <Link to="/signup" className="block px-3 py-2 rounded-md text-base font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+            Sign up
           </Link>
         </div>
       </div>
