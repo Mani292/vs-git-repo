@@ -365,6 +365,48 @@ export const videoData = {
         description: 'एथिकल हैकिंग तकनीकें सीखें',
         duration: '5 घंटे',
         difficulty: 'उन्नत'
+      },
+      {
+        id: 'SOTamWNgOyc',
+        title: 'उन्नत क्लाउड आर्किटेक्चर',
+        description: 'एंटरप्राइज क्लाउड समाधान और आर्किटेक्चर',
+        duration: '4 घंटे',
+        difficulty: 'उन्नत'
+      },
+      {
+        id: 'PH-2FfFD2PU',
+        title: 'Kubernetes और कंटेनर ऑर्केस्ट्रेशन',
+        description: 'उन्नत कंटेनर प्रबंधन और स्केलिंग',
+        duration: '4 घंटे',
+        difficulty: 'उन्नत'
+      },
+      {
+        id: '2VSNGqQ94qw',
+        title: 'उन्नत एथिकल हैकिंग',
+        description: 'पेनेट्रेशन टेस्टिंग और सुरक्षा मूल्यांकन',
+        duration: '5 घंटे',
+        difficulty: 'उन्नत'
+      },
+      {
+        id: 'SOTamWNgOyc',
+        title: 'उन्नत क्लाउड आर्किटेक्चर',
+        description: 'एंटरप्राइज क्लाउड समाधान और आर्किटेक्चर',
+        duration: '4 घंटे',
+        difficulty: 'उन्नत'
+      },
+      {
+        id: 'PH-2FfFD2PU',
+        title: 'Kubernetes और कंटेनर ऑर्केस्ट्रेशन',
+        description: 'उन्नत कंटेनर प्रबंधन और स्केलिंग',
+        duration: '4 घंटे',
+        difficulty: 'उन्नत'
+      },
+      {
+        id: '2VSNGqQ94qw',
+        title: 'उन्नत एथिकल हैकिंग',
+        description: 'पेनेट्रेशन टेस्टिंग और सुरक्षा मूल्यांकन',
+        duration: '5 घंटे',
+        difficulty: 'उन्नत'
       }
     ],
     telugu: [
@@ -379,6 +421,48 @@ export const videoData = {
         id: '2VSNGqQ94qw',
         title: 'ఎథికల్ హ్యాకింగ్ ట్యుటోరియల్',
         description: 'ఎథికల్ హ్యాకింగ్ టెక్నిక్స్ నేర్చుకోండి',
+        duration: '5 గంటలు',
+        difficulty: 'అధునాతన'
+      },
+      {
+        id: 'SOTamWNgOyc',
+        title: 'అధునాతన క్లౌడ్ ఆర్కిటెక్చర్',
+        description: 'ఎంటర్‌ప్రైజ్ క్లౌడ్ సొల్యూషన్లు మరియు ఆర్కిటెక్చర్',
+        duration: '4 గంటలు',
+        difficulty: 'అధునాతన'
+      },
+      {
+        id: 'PH-2FfFD2PU',
+        title: 'Kubernetes మరియు కంటైనర్ ఆర్కెస్ట్రేషన్',
+        description: 'అధునాతన కంటైనర్ నిర్వహణ మరియు స్కేలింగ్',
+        duration: '4 గంటలు',
+        difficulty: 'అధునాతన'
+      },
+      {
+        id: '2VSNGqQ94qw',
+        title: 'అధునాతన ఎథికల్ హ్యాకింగ్',
+        description: 'పెనెట్రేషన్ టెస్టింగ్ మరియు సెక్యూరిటీ అసెస్మెంట్',
+        duration: '5 గంటలు',
+        difficulty: 'అధునాతన'
+      },
+      {
+        id: 'SOTamWNgOyc',
+        title: 'అధునాతన క్లౌడ్ ఆర్కిటెక్చర్',
+        description: 'ఎంటర్‌ప్రైజ్ క్లౌడ్ సొల్యూషన్లు మరియు ఆర్కిటెక్చర్',
+        duration: '4 గంటలు',
+        difficulty: 'అధునాతన'
+      },
+      {
+        id: 'PH-2FfFD2PU',
+        title: 'Kubernetes మరియు కంటైనర్ ఆర్కెస్ట్రేషన్',
+        description: 'అధునాతన కంటైనర్ నిర్వహణ మరియు స్కేలింగ్',
+        duration: '4 గంటలు',
+        difficulty: 'అధునాతన'
+      },
+      {
+        id: '2VSNGqQ94qw',
+        title: 'అధునాతన ఎథికల్ హ్యాకింగ్',
+        description: 'పెనెట్రేషన్ టెస్టింగ్ మరియు సెక్యూరిటీ అసెస్మెంట్',
         duration: '5 గంటలు',
         difficulty: 'అధునాతన'
       }
@@ -649,6 +733,27 @@ export const videoData = {
         id: '3hLmDS179YE',
         title: 'Cybersecurity and Ethical Hacking',
         description: 'Advanced security concepts',
+        duration: '5 hours',
+        difficulty: 'Advanced'
+      },
+      {
+        id: 'SOTamWNgOyc',
+        title: 'Advanced Cloud Architecture',
+        description: 'Enterprise cloud solutions and architecture',
+        duration: '4 hours',
+        difficulty: 'Advanced'
+      },
+      {
+        id: 'PH-2FfFD2PU',
+        title: 'Kubernetes and Container Orchestration',
+        description: 'Advanced container management and scaling',
+        duration: '4 hours',
+        difficulty: 'Advanced'
+      },
+      {
+        id: '2VSNGqQ94qw',
+        title: 'Advanced Ethical Hacking',
+        description: 'Penetration testing and security assessment',
         duration: '5 hours',
         difficulty: 'Advanced'
       }

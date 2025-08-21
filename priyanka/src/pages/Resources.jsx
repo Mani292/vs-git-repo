@@ -137,7 +137,7 @@ export default function Resources() {
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 {language === 'hindi' ? 'कोई संसाधन नहीं मिला' : language === 'telugu' ? 'వనరులు కనుగొనబడలేదు' : 'No resources found'}
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-gray-600 dark:text-gray-200">
                 {language === 'hindi' ? 'अपने खोज शब्दों को बदलने का प्रयास करें' : language === 'telugu' ? 'మీ శోధన పదాలను మార్చడానికి ప్రయత్నించండి' : 'Try changing your search terms'}
             </p>
           </div>
@@ -154,14 +154,14 @@ export default function Resources() {
                       <span className="text-2xl">{categories.find(c => c.id === resource.category)?.icon}</span>
                       <div className="flex items-center space-x-1">
                         <span className="text-yellow-400">★</span>
-                        <span className="text-sm text-gray-600 dark:text-gray-400">{resource.rating}</span>
+                        <span className="text-sm text-gray-600 dark:text-gray-200">{resource.rating}</span>
                   </div>
                 </div>
 
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                     {resource.title}
                   </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+                    <p className="text-gray-600 dark:text-gray-200 mb-4 line-clamp-2">
                     {resource.description}
                   </p>
 
@@ -169,13 +169,13 @@ export default function Resources() {
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(resource.difficulty)}`}>
                       {resource.difficulty}
                     </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                      <span className="text-sm text-gray-500 dark:text-gray-200">
                         {resource.duration}
                       </span>
                   </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                      <span className="text-sm text-gray-500 dark:text-gray-200">
                         {language === 'hindi' ? 'वीडियो' : language === 'telugu' ? 'వీడియో' : 'Video'}
                       </span>
                       <button className="px-4 py-2 bg-indigo-600 dark:bg-indigo-500 text-white text-sm rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors">
@@ -201,7 +201,7 @@ export default function Resources() {
                 </h2>
               <button
                 onClick={() => setSelectedResource(null)}
-                  className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                  className="text-gray-500 dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-100"
               >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -209,13 +209,13 @@ export default function Resources() {
               </button>
             </div>
             
-              <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-200 mb-6 text-lg leading-relaxed">
                 {selectedResource.description}
               </p>
 
               <div className="grid md:grid-cols-3 gap-6 mb-6">
                 <div className="text-center">
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                  <div className="text-sm text-gray-500 dark:text-gray-200 mb-1">
                     {language === 'hindi' ? 'कठिनाई' : language === 'telugu' ? 'కష్టం' : 'Difficulty'}
                   </div>
                   <span className={`px-3 py-1 rounded-full text-sm font-medium ${getDifficultyColor(selectedResource.difficulty)}`}>
@@ -223,13 +223,13 @@ export default function Resources() {
                 </span>
               </div>
                 <div className="text-center">
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                  <div className="text-sm text-gray-500 dark:text-gray-200 mb-1">
                     {language === 'hindi' ? 'अवधि' : language === 'telugu' ? 'వ్యవధి' : 'Duration'}
                   </div>
                   <div className="text-gray-900 dark:text-white font-medium">{selectedResource.duration}</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                  <div className="text-sm text-gray-500 dark:text-gray-200 mb-1">
                     {language === 'hindi' ? 'रेटिंग' : language === 'telugu' ? 'రేటింగ్' : 'Rating'}
                   </div>
                   <div className="flex items-center justify-center space-x-1">

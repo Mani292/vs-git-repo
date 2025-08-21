@@ -85,12 +85,12 @@ export default function Roadmaps() {
       <section className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-800 dark:via-purple-800 dark:to-pink-800 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
               {language === 'hindi' ? 'लर्निंग रोडमैप्स' : language === 'telugu' ? 'లెర్నింగ్ రోడ్‌మ్యాప్స్' : 'Learning Roadmaps'}
-            </h1>
+          </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
               {language === 'hindi' ? 'अपने करियर के लिए सही पथ चुनें और स्टेप-बाय-स्टेप सीखें' : language === 'telugu' ? 'మీ కెరీర్ కోసం సరైన మార్గాన్ని ఎంచుకోండి మరియు స్టెప్-బై-స్టెప్ నేర్చుకోండి' : 'Choose the right path for your career and learn step-by-step'}
-            </p>
+          </p>
           </div>
         </div>
       </section>
@@ -107,30 +107,30 @@ export default function Roadmaps() {
               >
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                    {roadmap.title}
-                  </h3>
+                  {roadmap.title}
+                </h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    {roadmap.description}
-                  </p>
-                  
+                  {roadmap.description}
+                </p>
+                
                   <div className="flex items-center justify-between mb-4">
                     <div className="text-sm text-gray-500 dark:text-gray-400">
                       {language === 'hindi' ? 'अवधि' : language === 'telugu' ? 'వ్యవధి' : 'Duration'}: {roadmap.duration}
                     </div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">
                       {language === 'hindi' ? 'कठिनाई' : language === 'telugu' ? 'కష్టం' : 'Difficulty'}: {roadmap.difficulty}
-                    </div>
                   </div>
+                </div>
 
-                  <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-4">
                     {roadmap.skills.map((skill, index) => (
-                      <span
-                        key={index}
+                    <span
+                      key={index}
                         className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded-md"
-                      >
-                        {skill}
-                      </span>
-                    ))}
+                    >
+                      {skill}
+                    </span>
+                  ))}
                   </div>
 
                   <button className="w-full bg-indigo-600 dark:bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors">
@@ -163,13 +163,13 @@ export default function Roadmaps() {
               </div>
 
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                {selectedRoadmap.description}
-              </p>
-
+                  {selectedRoadmap.description}
+                </p>
+                
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div className="text-sm text-gray-500 dark:text-gray-400">
                   {language === 'hindi' ? 'अवधि' : language === 'telugu' ? 'వ్యవధి' : 'Duration'}: {selectedRoadmap.duration}
-                </div>
+                  </div>
                 <div className="text-sm text-gray-500 dark:text-gray-400">
                   {language === 'hindi' ? 'कठिनाई' : language === 'telugu' ? 'కష్టం' : 'Difficulty'}: {selectedRoadmap.difficulty}
                 </div>
@@ -210,7 +210,7 @@ export default function Roadmaps() {
               </div>
 
               <div className="flex justify-end">
-                <button
+                <button 
                   onClick={() => setSelectedRoadmap(null)}
                   className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
                 >
