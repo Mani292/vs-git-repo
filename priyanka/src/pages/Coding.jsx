@@ -1,461 +1,340 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
+import { Link } from 'react-router-dom';
+import anime from 'animejs/lib/anime.es.js';
 
 export default function Coding() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
   const { isDark } = useTheme();
+  const [selectedDifficulty, setSelectedDifficulty] = useState('all');
 
-  const categories = [
-    { id: 'all', name: 'All Platforms', icon: '🌐' },
-    { id: 'practice', name: 'Practice', icon: '💻' },
-    { id: 'contest', name: 'Contests', icon: '🏆' },
-    { id: 'learn', name: 'Learning', icon: '📚' },
-    { id: 'interview', name: 'Interview', icon: '🎯' }
-  ];
+  const difficulties = ['all', 'Easy', 'Medium', 'Hard'];
 
-  const codingPlatforms = [
+  const codingChallenges = [
     {
-      name: 'LeetCode',
-      description: 'The world\'s leading platform for technical interview preparation',
-      category: 'practice',
-      icon: '🧠',
-      color: 'orange',
-      features: ['1900+ Problems', 'Company Questions', 'Contests', 'Discuss'],
-      url: 'https://leetcode.com',
-      difficulty: 'Easy to Hard',
-      rating: 4.9
+      id: 1,
+      title: "Two Sum",
+      difficulty: "Easy",
+      description: "Find two numbers in an array that add up to a target sum",
+      tags: ["Array", "Hash Table"],
+      timeComplexity: "O(n)",
+      spaceComplexity: "O(n)",
+      link: "#"
     },
     {
-      name: 'HackerRank',
-      description: 'Practice coding skills, prepare for interviews, and get hired',
-      category: 'practice',
-      icon: '⚡',
-      color: 'green',
-      features: ['1000+ Problems', 'Skill Certifications', 'Company Challenges', 'Leaderboards'],
-      url: 'https://hackerrank.com',
-      difficulty: 'Beginner to Advanced',
-      rating: 4.7
+      id: 2,
+      title: "Reverse Linked List",
+      difficulty: "Easy",
+      description: "Reverse a singly linked list iteratively and recursively",
+      tags: ["Linked List", "Recursion"],
+      timeComplexity: "O(n)",
+      spaceComplexity: "O(1)",
+      link: "#"
     },
     {
-      name: 'Codeforces',
-      description: 'Programming competitions and contests, programming community',
-      category: 'contest',
-      icon: '🔥',
-      color: 'red',
-      features: ['Regular Contests', 'Rating System', 'Educational Rounds', 'Global Community'],
-      url: 'https://codeforces.com',
-      difficulty: 'Intermediate to Expert',
-      rating: 4.8
+      id: 3,
+      title: "Binary Tree Inorder Traversal",
+      difficulty: "Medium",
+      description: "Traverse a binary tree in inorder (left, root, right)",
+      tags: ["Tree", "DFS", "Recursion"],
+      timeComplexity: "O(n)",
+      spaceComplexity: "O(h)",
+      link: "#"
     },
     {
-      name: 'AtCoder',
-      description: 'Japanese programming contest website with regular competitions',
-      category: 'contest',
-      icon: '🇯🇵',
-      color: 'blue',
-      features: ['ABC Contests', 'ARC Contests', 'AGC Contests', 'Beginner Friendly'],
-      url: 'https://atcoder.jp',
-      difficulty: 'Beginner to Expert',
-      rating: 4.6
+      id: 4,
+      title: "Maximum Subarray",
+      difficulty: "Medium",
+      description: "Find the contiguous subarray with the largest sum",
+      tags: ["Array", "Dynamic Programming"],
+      timeComplexity: "O(n)",
+      spaceComplexity: "O(1)",
+      link: "#"
     },
     {
-      name: 'CodeChef',
-      description: 'Non-profit educational initiative for programming community',
-      category: 'contest',
-      icon: '🍽️',
-      color: 'brown',
-      features: ['Monthly Contests', 'Practice Problems', 'Tutorials', 'Discussion Forums'],
-      url: 'https://codechef.com',
-      difficulty: 'Easy to Hard',
-      rating: 4.5
+      id: 5,
+      title: "Merge k Sorted Lists",
+      difficulty: "Hard",
+      description: "Merge k sorted linked lists and return as one sorted list",
+      tags: ["Linked List", "Divide and Conquer", "Heap"],
+      timeComplexity: "O(n log k)",
+      spaceComplexity: "O(log k)",
+      link: "#"
     },
     {
-      name: 'GeeksforGeeks',
-      description: 'Computer science portal for geeks with practice problems',
-      category: 'learn',
-      icon: '📖',
-      color: 'green',
-      features: ['DSA Practice', 'Company Questions', 'Tutorials', 'Interview Prep'],
-      url: 'https://geeksforgeeks.org',
-      difficulty: 'Beginner to Advanced',
-      rating: 4.4
-    },
-    {
-      name: 'InterviewBit',
-      description: 'Platform to learn programming and prepare for interviews',
-      category: 'interview',
-      icon: '🎯',
-      color: 'purple',
-      features: ['Interview Questions', 'Company Specific', 'Mock Interviews', 'Progress Tracking'],
-      url: 'https://interviewbit.com',
-      difficulty: 'Intermediate to Hard',
-      rating: 4.6
-    },
-    {
-      name: 'TopCoder',
-      description: 'Competitive programming platform with algorithm competitions',
-      category: 'contest',
-      icon: '🏅',
-      color: 'yellow',
-      features: ['SRM Contests', 'Marathon Matches', 'Tutorials', 'Community'],
-      url: 'https://topcoder.com',
-      difficulty: 'Advanced to Expert',
-      rating: 4.7
-    },
-    {
-      name: 'SPOJ',
-      description: 'Sphere Online Judge with classical algorithm problems',
-      category: 'practice',
-      icon: '🌍',
-      color: 'blue',
-      features: ['Classical Problems', 'Challenge Problems', 'Tutorials', 'Community'],
-      url: 'https://spoj.com',
-      difficulty: 'Easy to Expert',
-      rating: 4.3
-    },
-    {
-      name: 'UVa Online Judge',
-      description: 'Programming contest training archive with thousands of problems',
-      category: 'practice',
-      icon: '📚',
-      color: 'orange',
-      features: ['1000+ Problems', 'Training Sets', 'Contest Archives', 'Statistics'],
-      url: 'https://onlinejudge.org',
-      difficulty: 'Intermediate to Expert',
-      rating: 4.2
-    },
-    {
-      name: 'Project Euler',
-      description: 'Mathematical and computational programming problems',
-      category: 'learn',
-      icon: '🔢',
-      color: 'gray',
-      features: ['Mathematical Problems', 'Progressive Difficulty', 'Community', 'Achievements'],
-      url: 'https://projecteuler.net',
-      difficulty: 'Intermediate to Expert',
-      rating: 4.8
-    },
-    {
-      name: 'Coderbyte',
-      description: 'Coding challenges and interview preparation platform',
-      category: 'interview',
-      icon: '💼',
-      color: 'indigo',
-      features: ['Coding Challenges', 'Interview Prep', 'Skill Assessments', 'Tutorials'],
-      url: 'https://coderbyte.com',
-      difficulty: 'Beginner to Advanced',
-      rating: 4.3
-    },
-    {
-      name: 'HackerEarth',
-      description: 'Innovation management and remote hiring platform',
-      category: 'contest',
-      icon: '🌍',
-      color: 'teal',
-      features: ['Hiring Challenges', 'Practice Problems', 'Hackathons', 'Skill Assessments'],
-      url: 'https://hackerearth.com',
-      difficulty: 'Beginner to Expert',
-      rating: 4.4
-    },
-    {
-      name: 'Kaggle',
-      description: 'Data science and machine learning platform',
-      category: 'learn',
-      icon: '📊',
-      color: 'purple',
-      features: ['Data Science Competitions', 'Datasets', 'Notebooks', 'Courses'],
-      url: 'https://kaggle.com',
-      difficulty: 'Intermediate to Expert',
-      rating: 4.8
-    },
-    {
-      name: 'Exercism',
-      description: 'Learn programming languages through guided exercises',
-      category: 'learn',
-      icon: '🎯',
-      color: 'pink',
-      features: ['Language Tracks', 'Mentorship', 'Community', 'Progressive Learning'],
-      url: 'https://exercism.org',
-      difficulty: 'Beginner to Advanced',
-      rating: 4.6
-    },
-    {
-      name: 'Codewars',
-      description: 'Improve your skills by training with others on real code challenges',
-      category: 'practice',
-      icon: '⚔️',
-      color: 'red',
-      features: ['Kata Challenges', 'Ranking System', 'Community', 'Multiple Languages'],
-      url: 'https://codewars.com',
-      difficulty: 'Beginner to Expert',
-      rating: 4.5
-    },
-    {
-      name: 'AlgoExpert',
-      description: 'Learn algorithms and data structures with video explanations',
-      category: 'interview',
-      icon: '🧮',
-      color: 'blue',
-      features: ['Video Explanations', 'Practice Problems', 'Mock Interviews', 'Study Plans'],
-      url: 'https://algoexpert.io',
-      difficulty: 'Intermediate to Hard',
-      rating: 4.7
-    },
-    {
-      name: 'BinarySearch',
-      description: 'Learn algorithms and data structures through interactive problems',
-      category: 'practice',
-      icon: '🔍',
-      color: 'green',
-      features: ['Interactive Problems', 'Progress Tracking', 'Community', 'Multiple Languages'],
-      url: 'https://binarysearch.com',
-      difficulty: 'Beginner to Advanced',
-      rating: 4.4
-    },
-    {
-      name: 'CodeSignal',
-      description: 'Technical assessment platform for hiring and skill development',
-      category: 'interview',
-      icon: '📡',
-      color: 'orange',
-      features: ['Technical Assessments', 'Practice Problems', 'Certification', 'Company Challenges'],
-      url: 'https://codesignal.com',
-      difficulty: 'Intermediate to Expert',
-      rating: 4.5
-    },
-    {
-      name: 'Edabit',
-      description: 'Learn to code with interactive tutorials and challenges',
-      category: 'learn',
-      icon: '📚',
-      color: 'indigo',
-      features: ['Interactive Tutorials', 'Challenges', 'Progress Tracking', 'Community'],
-      url: 'https://edabit.com',
-      difficulty: 'Beginner to Advanced',
-      rating: 4.3
-    },
-    {
-      name: 'CodePen',
-      description: 'Front-end development playground and community',
-      category: 'learn',
-      icon: '🎨',
-      color: 'pink',
-      features: ['Front-end Playground', 'Community Showcase', 'Collaboration', 'Templates'],
-      url: 'https://codepen.io',
-      difficulty: 'Beginner to Advanced',
-      rating: 4.6
-    },
-    {
-      name: 'Replit',
-      description: 'Online IDE and coding platform for learning and collaboration',
-      category: 'learn',
-      icon: '💻',
-      color: 'green',
-      features: ['Online IDE', 'Collaboration', 'Hosting', 'Templates'],
-      url: 'https://replit.com',
-      difficulty: 'Beginner to Advanced',
-      rating: 4.4
-    },
-    {
-      name: 'Glitch',
-      description: 'Create and share web apps with a friendly community',
-      category: 'learn',
-      icon: '⚡',
-      color: 'purple',
-      features: ['Web App Creation', 'Community', 'Templates', 'Collaboration'],
-      url: 'https://glitch.com',
-      difficulty: 'Beginner to Intermediate',
-      rating: 4.3
+      id: 6,
+      title: "Serialize and Deserialize Binary Tree",
+      difficulty: "Hard",
+      description: "Design an algorithm to serialize and deserialize a binary tree",
+      tags: ["Tree", "Design", "String"],
+      timeComplexity: "O(n)",
+      spaceComplexity: "O(n)",
+      link: "#"
     }
   ];
 
-  const getColorClasses = (color) => {
-    const colors = {
-      orange: 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400',
-      green: 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400',
-      red: 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400',
-      blue: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400',
-      brown: 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400',
-      purple: 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400',
-      yellow: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400',
-      gray: 'bg-gray-100 dark:bg-gray-900/30 text-gray-600 dark:text-gray-400',
-      indigo: 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400',
-      teal: 'bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400',
-      pink: 'bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400'
-    };
-    return colors[color] || 'bg-gray-100 dark:bg-gray-900/30 text-gray-600 dark:text-gray-400';
+  const projects = [
+    {
+      id: 1,
+      title: "Todo List App",
+      difficulty: "Easy",
+      description: "Build a complete todo application with CRUD operations",
+      tech: ["React", "CSS", "LocalStorage"],
+      estimatedTime: "4-6 hours",
+      features: ["Add/Edit/Delete tasks", "Mark as complete", "Filter by status"]
+    },
+    {
+      id: 2,
+      title: "Weather Dashboard",
+      difficulty: "Medium",
+      description: "Create a weather app using external API with location search",
+      tech: ["React", "API Integration", "CSS"],
+      estimatedTime: "8-10 hours",
+      features: ["Current weather", "5-day forecast", "Location search", "Responsive design"]
+    },
+    {
+      id: 3,
+      title: "E-commerce Platform",
+      difficulty: "Hard",
+      description: "Full-stack e-commerce platform with payment integration",
+      tech: ["React", "Node.js", "MongoDB", "Stripe"],
+      estimatedTime: "3-4 weeks",
+      features: ["User authentication", "Product catalog", "Shopping cart", "Payment processing"]
+    }
+  ];
+
+  const filteredChallenges = selectedDifficulty === 'all' 
+    ? codingChallenges 
+    : codingChallenges.filter(challenge => challenge.difficulty === selectedDifficulty);
+
+  useEffect(() => {
+    anime.timeline()
+      .add({
+        targets: '.hero-section',
+        opacity: [0, 1],
+        translateY: [30, 0],
+        duration: 800,
+        easing: 'easeOutCubic'
+      })
+      .add({
+        targets: '.challenge-grid',
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 600,
+        delay: anime.stagger(100),
+        easing: 'easeOutCubic'
+      }, '-=400')
+      .add({
+        targets: '.projects-section',
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 600,
+        easing: 'easeOutCubic'
+      }, '-=200');
+  }, [selectedDifficulty]);
+
+  const getDifficultyColor = (difficulty) => {
+    switch (difficulty) {
+      case 'Easy': return 'from-green-500 to-emerald-600';
+      case 'Medium': return 'from-yellow-500 to-orange-600';
+      case 'Hard': return 'from-red-500 to-pink-600';
+      default: return 'from-blue-500 to-indigo-600';
+    }
   };
 
-  const filteredPlatforms = selectedCategory === 'all' 
-    ? codingPlatforms 
-    : codingPlatforms.filter(platform => platform.category === selectedCategory);
-
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 dark:from-gray-900 dark:via-indigo-900 dark:to-purple-900 text-white py-20">
+      <section className="hero-section bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 dark:from-purple-800 dark:via-pink-800 dark:to-red-800 text-white py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Master Coding with the Best Platforms
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-100">
+            Coding Practice
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Discover top coding platforms for practice, contests, learning, and interview preparation. 
-            Choose your path to programming excellence.
+          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-purple-100">
+            Sharpen your coding skills with algorithmic challenges and hands-on projects
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category) => (
+          <div className="flex justify-center space-x-4">
+            <div className="bg-white/20 backdrop-blur-sm rounded-full px-6 py-2">
+              <span className="text-sm">💻 {codingChallenges.length} Challenges</span>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-full px-6 py-2">
+              <span className="text-sm">🚀 {projects.length} Projects</span>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-full px-6 py-2">
+              <span className="text-sm">🎯 All Levels</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Difficulty Filter */}
+      <section className="py-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200/50 dark:border-gray-700/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap justify-center gap-3">
+            {difficulties.map((difficulty) => (
               <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 ${
-                  selectedCategory === category.id
-                    ? 'bg-white text-indigo-900 shadow-lg'
-                    : 'bg-white/10 text-white hover:bg-white/20'
+                key={difficulty}
+                onClick={() => setSelectedDifficulty(difficulty)}
+                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-200 transform hover:scale-105 ${
+                  selectedDifficulty === difficulty
+                    ? `bg-gradient-to-r ${getDifficultyColor(difficulty)} text-white shadow-lg`
+                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600'
                 }`}
               >
-                <span className="mr-2">{category.icon}</span>
-                {category.name}
+                {difficulty === 'all' ? 'All Levels' : difficulty}
               </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Platforms Grid */}
-      <section className="py-20">
+      {/* Coding Challenges */}
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPlatforms.map((platform, index) => (
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              Coding Challenges
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              Practice algorithmic thinking with these curated coding problems
+            </p>
+          </div>
+
+          <div className="challenge-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredChallenges.map((challenge) => (
               <div
-                key={platform.name}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200 dark:border-gray-700 overflow-hidden group"
+                key={challenge.id}
+                className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
-                {/* Platform Header */}
-                <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-12 h-12 ${getColorClasses(platform.color)} rounded-lg flex items-center justify-center text-2xl`}>
-                        {platform.icon}
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                          {platform.name}
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    {challenge.title}
                         </h3>
-                        <div className="flex items-center space-x-2">
-                          <div className="flex items-center">
-                            {[...Array(5)].map((_, i) => (
-                              <svg
-                                key={i}
-                                className={`w-4 h-4 ${
-                                  i < Math.floor(platform.rating) 
-                                    ? 'text-yellow-400' 
-                                    : 'text-gray-300 dark:text-gray-600'
-                                }`}
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                              >
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                              </svg>
-                            ))}
-                            <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
-                              {platform.rating}
+                  <span className={`px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r ${getDifficultyColor(challenge.difficulty)} text-white`}>
+                    {challenge.difficulty}
                             </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                    {platform.description}
-                  </p>
                 </div>
 
-                {/* Platform Features */}
-                <div className="p-6">
-                  <div className="mb-4">
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Key Features:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {platform.features.map((feature, idx) => (
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                  {challenge.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {challenge.tags.map((tag, index) => (
                         <span
-                          key={idx}
-                          className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded-full"
+                      key={index}
+                      className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full"
                         >
-                          {feature}
+                      {tag}
                         </span>
                       ))}
-                    </div>
                   </div>
 
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      <span className="font-medium">Difficulty:</span> {platform.difficulty}
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex space-x-3">
-                    <a
-                      href={platform.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 bg-indigo-600 dark:bg-indigo-500 text-white text-center py-2 px-4 rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors font-medium"
-                    >
-                      Visit Platform
-                    </a>
-                    <button className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                      </svg>
-                    </button>
-                  </div>
+                <div className="space-y-1 text-xs text-gray-500 dark:text-gray-400 mb-4">
+                  <div>Time: {challenge.timeComplexity}</div>
+                  <div>Space: {challenge.spaceComplexity}</div>
                 </div>
+
+                <button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200">
+                  Solve Challenge
+                </button>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 bg-white dark:bg-gray-800">
+      {/* Projects Section */}
+      <section className="projects-section py-16 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Why Choose These Platforms?
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              Hands-on Projects
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              Comprehensive coverage for all your coding needs
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Build real-world applications to strengthen your development skills
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📊</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.map((project) => (
+              <div
+                key={project.id}
+                className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                    {project.title}
+                  </h3>
+                  <span className={`px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r ${getDifficultyColor(project.difficulty)} text-white`}>
+                    {project.difficulty}
+                  </span>
+                </div>
+
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  {project.description}
+                </p>
+
+                <div className="mb-4">
+                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">Technologies:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech, index) => (
+                      <span
+                        key={index}
+                        className="px-2 py-1 text-xs bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">10,000+ Problems</h3>
-              <p className="text-gray-600 dark:text-gray-400">Extensive problem sets across all difficulty levels</p>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🏆</span>
+
+                <div className="mb-4">
+                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">Key Features:</h4>
+                  <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                    {project.features.map((feature, index) => (
+                      <li key={index} className="flex items-center">
+                        <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Regular Contests</h3>
-              <p className="text-gray-600 dark:text-gray-400">Weekly and monthly coding competitions</p>
+
+                <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                  Estimated time: {project.estimatedTime}
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-pink-100 dark:bg-pink-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">💼</span>
+
+                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200">
+                  Start Project
+                </button>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Interview Prep</h3>
-              <p className="text-gray-600 dark:text-gray-400">Company-specific questions and mock interviews</p>
+            ))}
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🌍</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Global Community</h3>
-              <p className="text-gray-600 dark:text-gray-400">Connect with millions of developers worldwide</p>
-            </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-16">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+            Ready to Level Up Your Coding Skills?
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
+            Practice makes perfect. Start with challenges or dive into projects.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/profile"
+              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105"
+            >
+              Track Progress
+            </Link>
+            <Link
+              to="/resources"
+              className="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-medium rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
+            >
+              Learn Fundamentals
+            </Link>
           </div>
         </div>
       </section>

@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../contexts/LanguageContext';
+
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const { language } = useLanguage();
+
 
   // Sample notifications - you can replace these with real ones later
   useEffect(() => {
     const sampleNotifications = [
       {
         id: 1,
-        title: language === 'hindi' ? 'नई वीडियो उपलब्ध' : language === 'telugu' ? 'కొత్త వీడియో అందుబాటులో ఉంది' : 'New Video Available',
-        message: language === 'hindi' ? 'Python प्रोग्रामिंग टूटोरियल अब उपलब्ध है' : language === 'telugu' ? 'Python ప్రోగ్రామింగ్ ట్యుటోరియల్ ఇప్పుడు అందుబాటులో ఉంది' : 'Python Programming Tutorial is now available',
+            title: 'New Video Available',
+    message: 'Python Programming Tutorial is now available',
         type: 'info',
         timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000) // 2 hours ago
       },
       {
         id: 2,
-        title: language === 'hindi' ? 'अपडेट उपलब्ध' : language === 'telugu' ? 'అప్‌డేట్ అందుబాటులో ఉంది' : 'Update Available',
-        message: language === 'hindi' ? 'वेबसाइट में नई सुविधाएं जोड़ी गई हैं' : language === 'telugu' ? 'వెబ్‌సైట్‌లో కొత్త ఫీచర్లు జోడించబడ్డాయి' : 'New features have been added to the website',
+            title: 'Update Available',
+    message: 'New features have been added to the website',
         type: 'success',
         timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000) // 1 day ago
       }
@@ -47,10 +47,10 @@ const Notifications = () => {
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-    if (minutes < 1) return language === 'hindi' ? 'अभी' : language === 'telugu' ? 'ఇప్పుడు' : 'Just now';
-    if (minutes < 60) return language === 'hindi' ? `${minutes} मिनट पहले` : language === 'telugu' ? `${minutes} నిమిషాల క్రితం` : `${minutes} minutes ago`;
-    if (hours < 24) return language === 'hindi' ? `${hours} घंटे पहले` : language === 'telugu' ? `${hours} గంటల క్రితం` : `${hours} hours ago`;
-    return language === 'hindi' ? `${days} दिन पहले` : language === 'telugu' ? `${days} రోజుల క్రితం` : `${days} days ago`;
+      if (minutes < 1) return 'Just now';
+  if (minutes < 60) return `${minutes} minutes ago`;
+  if (hours < 24) return `${hours} hours ago`;
+  return `${days} days ago`;
   };
 
   const removeNotification = (id) => {
@@ -80,7 +80,7 @@ const Notifications = () => {
         <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50 max-h-96 overflow-y-auto">
           <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-              {language === 'hindi' ? 'सूचनाएं' : language === 'telugu' ? 'నోటిఫికేషన్లు' : 'Notifications'}
+              Notifications
             </h3>
           </div>
           
@@ -89,7 +89,7 @@ const Notifications = () => {
               <div className="text-center py-8">
                 <div className="text-4xl mb-2">🔔</div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {language === 'hindi' ? 'कोई सूचना नहीं' : language === 'telugu' ? 'నోటిఫికేషన్లు లేవు' : 'No notifications'}
+                  No notifications
                 </p>
               </div>
             ) : (
@@ -134,7 +134,7 @@ const Notifications = () => {
                 onClick={() => setNotifications([])}
                 className="w-full text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
-                {language === 'hindi' ? 'सभी सूचनाएं साफ़ करें' : language === 'telugu' ? 'అన్ని నోటిఫికేషన్లను క్లియర్ చేయండి' : 'Clear all notifications'}
+                Clear all notifications
               </button>
             </div>
           )}

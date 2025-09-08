@@ -1,342 +1,411 @@
-// src/pages/Placement.tsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
+import { Link } from 'react-router-dom';
+import anime from 'animejs/lib/anime.es.js';
 
 export default function Placement() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
   const { isDark } = useTheme();
+  const [activeTab, setActiveTab] = useState('interview');
 
-  const categories = [
-    { id: 'all', name: 'All Categories', icon: '🎯' },
-    { id: 'preparation', name: 'Interview Prep', icon: '📚' },
-    { id: 'companies', name: 'Top Companies', icon: '🏢' },
-    { id: 'skills', name: 'Skill Development', icon: '💻' },
-    { id: 'resources', name: 'Resources', icon: '📖' }
-  ];
-
-  const placementData = [
+  const interviewTopics = [
     {
-      id: 1,
-      title: "Complete Interview Preparation Guide",
-      category: "preparation",
-      description: "Comprehensive guide covering technical interviews, behavioral questions, and coding challenges.",
-      type: "Guide",
-      difficulty: "All Levels",
-      duration: "2-3 months",
-      features: ["Technical Questions", "Behavioral Prep", "Coding Challenges", "Mock Interviews"]
+      category: "Technical Skills",
+      icon: "💻",
+      topics: [
+        "Data Structures & Algorithms",
+        "System Design",
+        "Object-Oriented Programming",
+        "Database Management",
+        "Web Development",
+        "Problem Solving"
+      ]
     },
     {
-      id: 2,
-      title: "FAANG Company Interview Patterns",
-      category: "companies",
-      description: "Detailed analysis of interview patterns and preparation strategies for top tech companies.",
-      type: "Analysis",
-      difficulty: "Advanced",
-      duration: "4-6 months",
-      features: ["Company Specific", "Question Patterns", "Success Stories", "Tips & Tricks"]
+      category: "Behavioral Skills",
+      icon: "🗣️",
+      topics: [
+        "Communication Skills",
+        "Leadership Experience",
+        "Teamwork & Collaboration",
+        "Problem-Solving Approach",
+        "Adaptability",
+        "Time Management"
+      ]
     },
     {
-      id: 3,
-      title: "Data Structures & Algorithms Mastery",
-      category: "skills",
-      description: "Master DSA concepts with 500+ practice problems and detailed solutions.",
-      type: "Course",
-      difficulty: "Intermediate",
-      duration: "3-4 months",
-      features: ["500+ Problems", "Video Solutions", "Practice Tests", "Progress Tracking"]
-    },
-    {
-      id: 4,
-      title: "System Design Interview Prep",
-      category: "preparation",
-      description: "Learn system design concepts and practice with real-world scenarios.",
-      type: "Course",
-      difficulty: "Advanced",
-      duration: "2-3 months",
-      features: ["Design Patterns", "Scalability", "Case Studies", "Mock Sessions"]
-    },
-    {
-      id: 5,
-      title: "Resume Building Workshop",
-      category: "resources",
-      description: "Create a compelling resume that stands out to recruiters and hiring managers.",
-      type: "Workshop",
-      difficulty: "Beginner",
-      duration: "1-2 weeks",
-      features: ["Template Library", "ATS Optimization", "Review Service", "Portfolio Tips"]
-    },
-    {
-      id: 6,
-      title: "Behavioral Interview Mastery",
-      category: "preparation",
-      description: "Master behavioral questions with the STAR method and compelling storytelling.",
-      type: "Guide",
-      difficulty: "All Levels",
-      duration: "1-2 months",
-      features: ["STAR Method", "Story Examples", "Practice Questions", "Video Coaching"]
+      category: "Company Research",
+      icon: "🔍",
+      topics: [
+        "Company Values & Culture",
+        "Recent News & Updates",
+        "Products & Services",
+        "Competitors Analysis",
+        "Growth Opportunities",
+        "Interview Process"
+      ]
     }
   ];
 
-  const topCompanies = [
-    { name: "Google", logo: "🔍", hiring: "Active", difficulty: "Very High", avgSalary: "$150K+" },
-    { name: "Microsoft", logo: "🪟", hiring: "Active", difficulty: "High", avgSalary: "$130K+" },
-    { name: "Amazon", logo: "📦", hiring: "Active", difficulty: "High", avgSalary: "$140K+" },
-    { name: "Apple", logo: "🍎", hiring: "Active", difficulty: "Very High", avgSalary: "$160K+" },
-    { name: "Meta", logo: "📘", hiring: "Active", difficulty: "High", avgSalary: "$145K+" },
-    { name: "Netflix", logo: "🎬", hiring: "Selective", difficulty: "Very High", avgSalary: "$180K+" }
+  const companies = [
+    {
+      name: "Google",
+      logo: "🟩",
+      difficulty: "Very Hard",
+      process: ["Online Assessment", "Phone Interview", "Onsite (4-5 rounds)"],
+      tips: "Focus on algorithms, system design, and Googleyness",
+      averageSalary: "$180k - $350k"
+    },
+    {
+      name: "Microsoft",
+      logo: "🟦",
+      difficulty: "Hard",
+      process: ["Online Assessment", "Phone Screen", "Onsite (3-4 rounds)"],
+      tips: "Emphasize collaboration and growth mindset",
+      averageSalary: "$160k - $300k"
+    },
+    {
+      name: "Amazon",
+      logo: "🟧",
+      difficulty: "Hard", 
+      process: ["Online Assessment", "Phone Interview", "Onsite (5-6 rounds)"],
+      tips: "Know the Leadership Principles deeply",
+      averageSalary: "$150k - $280k"
+    },
+    {
+      name: "Meta",
+      logo: "🟪",
+      difficulty: "Very Hard",
+      process: ["Phone Screen", "Technical Interview", "Onsite (4-5 rounds)"],
+      tips: "Focus on impact and building for people",
+      averageSalary: "$170k - $320k"
+    },
+    {
+      name: "Apple",
+      logo: "⚪",
+      difficulty: "Hard",
+      process: ["Phone Screen", "Technical Interview", "Onsite (3-4 rounds)"],
+      tips: "Show passion for products and attention to detail",
+      averageSalary: "$165k - $310k"
+    },
+    {
+      name: "Netflix",
+      logo: "🔴",
+      difficulty: "Very Hard",
+      process: ["Phone Screen", "Technical Round", "Onsite (2-3 rounds)"],
+      tips: "Demonstrate high performance and culture fit",
+      averageSalary: "$200k - $400k"
+    }
   ];
 
-  const stats = [
-    { label: "Students Placed", value: "500+", icon: "🎓" },
-    { label: "Average Package", value: "$85K", icon: "💰" },
-    { label: "Success Rate", value: "92%", icon: "📈" },
-    { label: "Partner Companies", value: "50+", icon: "🤝" }
+  const resumeTips = [
+    {
+      title: "Contact Information",
+      description: "Include full name, phone, email, LinkedIn, and GitHub",
+      icon: "📞"
+    },
+    {
+      title: "Professional Summary",
+      description: "2-3 lines highlighting your key skills and experience",
+      icon: "📝"
+    },
+    {
+      title: "Technical Skills",
+      description: "List programming languages, frameworks, and tools",
+      icon: "⚙️"
+    },
+    {
+      title: "Experience",
+      description: "Use action verbs and quantify achievements",
+      icon: "💼"
+    },
+    {
+      title: "Projects",
+      description: "Showcase 2-3 significant projects with tech stack",
+      icon: "🚀"
+    },
+    {
+      title: "Education",
+      description: "Include degree, university, GPA (if above 3.5)",
+      icon: "🎓"
+    }
   ];
 
-  const filteredData = selectedCategory === 'all' 
-    ? placementData 
-    : placementData.filter(item => item.category === selectedCategory);
+  const interviewTips = [
+    "Practice coding on a whiteboard or paper",
+    "Explain your thought process out loud",
+    "Ask clarifying questions before starting",
+    "Consider edge cases and time complexity",
+    "Practice system design problems",
+    "Prepare STAR format behavioral stories",
+    "Research the company thoroughly",
+    "Prepare thoughtful questions to ask"
+  ];
+
+  useEffect(() => {
+    anime.timeline()
+      .add({
+        targets: '.hero-section',
+        opacity: [0, 1],
+        translateY: [30, 0],
+        duration: 800,
+        easing: 'easeOutCubic'
+      })
+      .add({
+        targets: '.content-section',
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 600,
+        delay: anime.stagger(100),
+        easing: 'easeOutCubic'
+      }, '-=400');
+  }, [activeTab]);
+
+  const getDifficultyColor = (difficulty) => {
+    switch (difficulty) {
+      case 'Easy': return 'from-green-500 to-emerald-600';
+      case 'Medium': return 'from-yellow-500 to-orange-600';
+      case 'Hard': return 'from-orange-500 to-red-600';
+      case 'Very Hard': return 'from-red-500 to-pink-600';
+      default: return 'from-blue-500 to-indigo-600';
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gradient-dark transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 dark:from-gray-900 dark:via-indigo-900 dark:to-purple-900 text-white py-20">
+      <section className="hero-section bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-800 dark:via-indigo-800 dark:to-purple-800 text-white py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Career <span className="bg-gradient-to-r from-neon-blue to-neon-pink bg-clip-text text-transparent">Placement</span>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+            Career Placement
       </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Comprehensive placement assistance, interview preparation, and career guidance 
-            to help you land your dream job in the tech industry.
+          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-blue-100">
+            Get interview-ready with comprehensive preparation guides and insider tips
           </p>
+          <div className="flex justify-center space-x-4">
+            <div className="bg-white/20 backdrop-blur-sm rounded-full px-6 py-2">
+              <span className="text-sm">🎯 Interview Prep</span>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-full px-6 py-2">
+              <span className="text-sm">📄 Resume Guide</span>
         </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-white dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl mb-2">{stat.icon}</div>
-                <div className="text-3xl font-bold text-neon-blue mb-2">{stat.value}</div>
-                <div className="text-gray-600 dark:text-gray-400">{stat.label}</div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-full px-6 py-2">
+              <span className="text-sm">🏢 Top Companies</span>
               </div>
-            ))}
           </div>
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="py-12 bg-gray-50 dark:bg-gray-900">
+      {/* Navigation Tabs */}
+      <section className="py-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200/50 dark:border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap gap-4 justify-center">
-            {categories.map((category) => (
+          <div className="flex space-x-1 bg-gray-100 dark:bg-gray-700 rounded-xl p-1 max-w-2xl mx-auto">
+            {['interview', 'resume', 'companies'].map((tab) => (
               <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 ${
-                  selectedCategory === category.id
-                    ? 'bg-gradient-to-r from-neon-blue to-neon-purple text-white shadow-neon'
-                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-neon-blue hover:to-neon-purple hover:text-white'
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`flex-1 py-3 px-6 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  activeTab === tab
+                    ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                 }`}
               >
-                <span className="mr-2">{category.icon}</span>
-                {category.name}
+                {tab === 'interview' && '💼 Interview Prep'}
+                {tab === 'resume' && '📄 Resume Guide'}
+                {tab === 'companies' && '🏢 Top Companies'}
               </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Placement Resources */}
-      <section className="py-20 bg-white dark:bg-gray-800">
+      {/* Content Sections */}
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Placement Resources
+          {activeTab === 'interview' && (
+            <div className="content-section space-y-12">
+              {/* Interview Topics */}
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                  Interview Preparation Topics
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              Everything you need to prepare for your dream job
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredData.map((item) => (
-              <div
-                key={item.id}
-                className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200 dark:border-gray-600"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <span className="px-3 py-1 bg-gradient-to-r from-neon-blue to-neon-purple text-white rounded-full text-xs font-medium">
-                    {item.type}
-                  </span>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {item.difficulty}
-                  </span>
-                </div>
-
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                  {item.title}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {interviewTopics.map((category, index) => (
+                    <div
+                      key={index}
+                      className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
+                    >
+                      <div className="text-center mb-6">
+                        <div className="text-4xl mb-3">{category.icon}</div>
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                          {category.category}
                 </h3>
-                
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  {item.description}
-                </p>
-
-                <div className="mb-4">
-                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
-                    <span className="mr-2">⏱️</span>
-                    {item.duration}
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                    Features:
-                  </h4>
-                  <div className="space-y-1">
-                    {item.features.map((feature, index) => (
-                      <div key={index} className="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                        <span className="text-neon-green mr-2">✓</span>
-                        {feature}
+                      </div>
+                      <ul className="space-y-3">
+                        {category.topics.map((topic, topicIndex) => (
+                          <li key={topicIndex} className="flex items-center text-gray-600 dark:text-gray-300">
+                            <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                            {topic}
+                          </li>
+                        ))}
+                      </ul>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <button className="w-full px-4 py-2 bg-gradient-to-r from-neon-blue to-neon-purple text-white rounded-lg hover:from-neon-purple hover:to-neon-pink transition-all duration-300 font-medium">
-                  Get Started
-                </button>
+              {/* Interview Tips */}
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+                  🎯 Essential Interview Tips
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {interviewTips.map((tip, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center space-x-3 bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm"
+                    >
+                      <span className="text-blue-500 font-bold text-lg">{index + 1}</span>
+                      <span className="text-gray-700 dark:text-gray-300">{tip}</span>
               </div>
             ))}
           </div>
         </div>
-      </section>
+            </div>
+          )}
 
-      {/* Top Companies */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Top Hiring Companies
+          {activeTab === 'resume' && (
+            <div className="content-section">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                Resume Building Guide
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              Companies actively hiring B.Tech graduates
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {topCompanies.map((company, index) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {resumeTips.map((tip, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-gray-800 rounded-xl p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200 dark:border-gray-700"
-              >
-                <div className="flex items-center mb-4">
-                  <div className="text-3xl mr-4">{company.logo}</div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                      {company.name}
+                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="text-center mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span className="text-2xl">{tip.icon}</span>
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        {tip.title}
                     </h3>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      company.hiring === 'Active' 
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
-                        : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300'
-                    }`}>
-                      {company.hiring}
-                    </span>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-300 text-center">
+                      {tip.description}
+                    </p>
                   </div>
+                ))}
                 </div>
 
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">Difficulty:</span>
-                    <span className="text-gray-900 dark:text-white font-medium">{company.difficulty}</span>
+              {/* Resume Template */}
+              <div className="mt-12 bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+                  📄 Resume Template Structure
+                </h3>
+                <div className="space-y-4 text-gray-600 dark:text-gray-300">
+                  <div className="border-l-4 border-blue-500 pl-4">
+                    <strong>Header:</strong> Name, Phone, Email, LinkedIn, GitHub
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">Avg Salary:</span>
-                    <span className="text-neon-green font-medium">{company.avgSalary}</span>
+                  <div className="border-l-4 border-green-500 pl-4">
+                    <strong>Summary:</strong> 2-3 lines highlighting key skills and experience
+                  </div>
+                  <div className="border-l-4 border-purple-500 pl-4">
+                    <strong>Technical Skills:</strong> Programming languages, frameworks, databases, tools
+                  </div>
+                  <div className="border-l-4 border-orange-500 pl-4">
+                    <strong>Experience:</strong> Company, Role, Duration, Key achievements with metrics
+                  </div>
+                  <div className="border-l-4 border-red-500 pl-4">
+                    <strong>Projects:</strong> Project name, technologies used, brief description
+                  </div>
+                  <div className="border-l-4 border-indigo-500 pl-4">
+                    <strong>Education:</strong> Degree, University, GPA (if above 3.5)
                   </div>
                 </div>
-
-                <button className="w-full mt-4 px-4 py-2 border border-neon-blue text-neon-blue rounded-lg hover:bg-neon-blue hover:text-white transition-all duration-300 font-medium">
-                  Learn More
-                </button>
               </div>
-            ))}
+            </div>
+          )}
+
+          {activeTab === 'companies' && (
+            <div className="content-section">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                Top Tech Companies
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {companies.map((company, index) => (
+                  <div
+                    key={index}
+                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center space-x-3">
+                        <span className="text-3xl">{company.logo}</span>
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                          {company.name}
+              </h3>
+                      </div>
+                      <span className={`px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r ${getDifficultyColor(company.difficulty)} text-white`}>
+                        {company.difficulty}
+                      </span>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-white mb-2">Interview Process:</h4>
+                        <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                          {company.process.map((step, stepIndex) => (
+                            <li key={stepIndex} className="flex items-center">
+                              <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
+                              {step}
+                            </li>
+                          ))}
+                        </ul>
+            </div>
+
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-white mb-2">Key Tips:</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">{company.tips}</p>
+            </div>
+
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-white mb-2">Average Salary:</h4>
+                        <p className="text-sm font-semibold text-green-600 dark:text-green-400">
+                          {company.averageSalary}
+              </p>
+            </div>
           </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Interview Tips */}
-      <section className="py-20 bg-white dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Interview Success Tips
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              Proven strategies to ace your technical interviews
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl mb-4">🧠</div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                Master DSA
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Practice 300+ problems covering all data structures and algorithms.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl mb-4">🏗️</div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                System Design
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Learn scalable architecture patterns and design principles.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl mb-4">💬</div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                Communication
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Practice explaining your solutions clearly and confidently.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl mb-4">📝</div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                Mock Interviews
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Simulate real interview conditions with our AI-powered platform.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-700 dark:to-purple-700 text-white">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      {/* Call to Action */}
+      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-800 dark:to-purple-800">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 text-white">
+          <h2 className="text-3xl font-bold mb-6">
             Ready to Land Your Dream Job?
           </h2>
-          <p className="text-xl mb-8 text-indigo-100">
-            Start your placement preparation journey today and join thousands of successful graduates
+          <p className="text-xl mb-8 text-blue-100">
+            Start practicing and build your profile to track your progress
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-4 bg-white text-indigo-600 font-semibold rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
-              Start Preparation
-            </button>
-            <button className="px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-indigo-600 transition-all duration-300 transform hover:scale-105">
-              Book Mock Interview
-            </button>
+            <Link
+              to="/coding"
+              className="px-8 py-4 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-all duration-200 transform hover:scale-105"
+            >
+              Practice Coding
+            </Link>
+            <Link
+              to="/profile"
+              className="px-8 py-4 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-blue-600 transition-all duration-200"
+            >
+              Track Progress
+            </Link>
           </div>
         </div>
       </section>
